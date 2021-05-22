@@ -1,0 +1,27 @@
+micronaut:
+  application:
+    name: hexagonal
+datasources:
+  default:
+    schema: library
+    url: jdbc:postgresql://localhost:5432/library
+    driverClassName: org.postgresql.Driver
+    username: library_oltp
+    password: mostlyharmless
+    dialect: POSTGRES
+jpa:
+  default:
+    properties:
+      hibernate:
+        physical_naming_strategy: "io.micronaut.data.hibernate.naming.DefaultPhysicalNamingStrategy"
+        show_sql: true
+    entity-scan:
+      packages:
+        - 'com.ffr.booklibrary.core.inventory.adapters.db'
+        - 'com.ffr.booklibrary.core.circulation.adapters.db'
+flyway:
+  datasources:
+    default:
+      enabled: true
+      locations:
+        - classpath:databasemigrations

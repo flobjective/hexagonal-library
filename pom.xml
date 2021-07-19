@@ -18,9 +18,11 @@
     <release.version>11</release.version>
     <micronaut.version>2.4.2</micronaut.version>
     <micronaut.data.version>2.3.1</micronaut.data.version>
-    <exec.mainClass>com.ffr.booklibrary.core.BookLibraryApplication</exec.mainClass>
+    <micronaut.hibernate-validator.version>2.0.0</micronaut.hibernate-validator.version>
+    <exec.mainClass>com.ffr.booklibrary.BookLibraryApplication</exec.mainClass>
     <micronaut.runtime>netty</micronaut.runtime>
     <lombok.version>1.18.20</lombok.version>
+    <archunit.version>0.20.0</archunit.version>
   </properties>
 
   <repositories>
@@ -93,6 +95,11 @@
       <version>${micronaut.data.version}</version>
     </dependency>
     <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-hibernate-validator</artifactId>
+      <version>${micronaut.hibernate-validator.version}</version>
+    </dependency>
+    <dependency>
       <groupId>io.micronaut.flyway</groupId>
       <artifactId>micronaut-flyway</artifactId>
     </dependency>
@@ -131,6 +138,18 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit</artifactId>
+      <version>${archunit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <version>${archunit.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

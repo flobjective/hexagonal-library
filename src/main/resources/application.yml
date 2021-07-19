@@ -18,7 +18,7 @@ jpa:
     entity-scan:
       packages:
         - 'com.ffr.booklibrary.core.inventory.adapters.db'
-        - 'com.ffr.booklibrary.core.circulation.adapters.db'
+        - 'com.ffr.booklibrary.core.circulation.core.adapters.db'
 flyway:
   datasources:
     default:

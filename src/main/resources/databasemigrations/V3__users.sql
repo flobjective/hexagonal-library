@@ -1,0 +1,1 @@
+INSERT into users values ('3bfc01e8-b586-453c-923d-7776bfa39273', 'Max');

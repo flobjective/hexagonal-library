@@ -17,11 +17,14 @@ jpa:
         show_sql: true
     entity-scan:
       packages:
-        - 'com.ffr.booklibrary.core.inventory.adapters.db'
-        - 'com.ffr.booklibrary.core.circulation.core.adapters.db'
+        - 'com.ffr.booklibrary.inventory.core.adapters.db'
+        - 'com.ffr.booklibrary.circulation.core.adapters.db'
 flyway:
   datasources:
     default:
       enabled: true
       locations:
         - classpath:databasemigrations
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092

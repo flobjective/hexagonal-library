@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
-import com.ffr.booklibrary.circulation.core.model.User;
+import com.ffr.booklibrary.circulation.core.domain.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +19,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class JpaUser {
 
-    @Id
-    private UUID id;
+  @Id private UUID id;
 
-    private String username;
+  private String username;
 
-    public User toUserId() {
-        return User.builder().id(this.id).username(this.username).build();
-    }
+  public User toUser() {
+    return User.builder()
+        .id(this.id)
+        .username(this.username)
+        .build();
+  }
 }

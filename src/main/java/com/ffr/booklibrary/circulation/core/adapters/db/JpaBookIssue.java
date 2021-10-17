@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
-import com.ffr.booklibrary.circulation.core.model.BookIssue;
-import com.ffr.booklibrary.circulation.core.model.UserId;
+import com.ffr.booklibrary.circulation.core.domain.model.BookIssue;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import lombok.*;
 
 import javax.persistence.*;

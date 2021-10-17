@@ -1,8 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
-import com.ffr.booklibrary.circulation.core.model.IssueBookCommand;
-import com.ffr.booklibrary.circulation.core.ports.incoming.IssueBook;
-import com.ffr.booklibrary.circulation.core.ports.incoming.ListIssuedBooks;
+import com.ffr.booklibrary.circulation.core.application.ports.incoming.*;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
@@ -21,6 +19,9 @@ public class CirculationController {
     @Inject
     private IssueBook issueBook;
 
+    @Inject
+    private ReturnBook returnBook;
+
     @Post(value = "/issued")
     public IssuedBooksResponse listIssuedBooks(@Body @Valid IssuedToUserIdDto issuedToUserIdDto) {
         return IssuedBooksResponse.of(listIssuedBooks.listIssuedBooks(issuedToUserIdDto.toUserId()));
@@ -29,6 +30,11 @@ public class CirculationController {
     @Post(value = "/issue")
     public void issueToUser(@Body @Valid IssueBookToUserDto issueToUserDto) {
         issueBook.issueBook(new IssueBookCommand(issueToUserDto.toBookId(), issueToUserDto.toUserId()));
+    }
+
+    @Post(value = "/return")
+    public void returnBook(@Body @Valid ReturnBookDto returnBookDto) {
+        returnBook.returnBook(new ReturnBookCommand(returnBookDto.toBookId()));
     }
 
 }

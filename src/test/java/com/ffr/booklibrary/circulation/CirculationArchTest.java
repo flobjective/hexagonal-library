@@ -6,6 +6,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import org.junit.jupiter.api.Test;
 
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
+import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 @AnalyzeClasses(packages = "com.ffr.booklibrary.circulation.core")
 public class CirculationArchTest {
@@ -16,14 +17,12 @@ public class CirculationArchTest {
     @Test
     public void onion_architecture_is_respected() {
         onionArchitecture()
-                .domainModels("..model..", "..ports..")
-                .domainServices("..service..")
+                .domainModels("..domain.model..")
+                .applicationServices("..application..")
                 .adapter("persistence", "..adapters.db..")
                 .adapter("api", "..adapters.api..")
                 .adapter("event", "..adapters.event..")
                 .withOptionalLayers(true)
                 .check(classes);
     }
-
-
 }

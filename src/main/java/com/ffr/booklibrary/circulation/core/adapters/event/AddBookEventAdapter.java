@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.circulation.core.adapters.event;
 
-import com.ffr.booklibrary.circulation.core.model.InventoryNumber;
-import com.ffr.booklibrary.circulation.core.ports.incoming.AddBookToCirculation;
+import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
+import com.ffr.booklibrary.circulation.core.application.ports.incoming.AddBookToCirculation;
 import com.ffr.booklibrary.shared.events.BookAddedEvent;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.scheduling.annotation.Async;

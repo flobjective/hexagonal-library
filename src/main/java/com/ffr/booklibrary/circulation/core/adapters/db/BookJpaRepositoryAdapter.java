@@ -1,10 +1,10 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
-import com.ffr.booklibrary.circulation.core.model.Book;
-import com.ffr.booklibrary.circulation.core.model.BookId;
-import com.ffr.booklibrary.circulation.core.model.BookReadModel;
-import com.ffr.booklibrary.circulation.core.model.UserId;
-import com.ffr.booklibrary.circulation.core.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.circulation.core.domain.model.Book;
+import com.ffr.booklibrary.circulation.core.domain.model.BookId;
+import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
+import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
 
 import javax.inject.Singleton;
 import java.util.List;

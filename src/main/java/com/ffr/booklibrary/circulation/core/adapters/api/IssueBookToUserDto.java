@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
-import com.ffr.booklibrary.circulation.core.model.BookId;
-import com.ffr.booklibrary.circulation.core.model.UserId;
+import com.ffr.booklibrary.circulation.core.domain.model.BookId;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.data.annotation.Transient;
 import lombok.Data;

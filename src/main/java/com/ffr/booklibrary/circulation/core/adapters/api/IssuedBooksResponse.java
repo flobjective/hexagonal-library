@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
-import com.ffr.booklibrary.circulation.core.model.BookReadModel;
+import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

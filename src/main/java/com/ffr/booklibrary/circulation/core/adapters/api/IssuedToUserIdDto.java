@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
-import com.ffr.booklibrary.circulation.core.model.UserId;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import io.micronaut.core.annotation.Introspected;
 import lombok.Data;
 

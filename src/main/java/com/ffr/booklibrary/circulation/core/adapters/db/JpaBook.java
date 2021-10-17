@@ -1,9 +1,9 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
-import com.ffr.booklibrary.circulation.core.model.Book;
-import com.ffr.booklibrary.circulation.core.model.InventoryNumber;
-import com.ffr.booklibrary.circulation.core.model.BookId;
-import com.ffr.booklibrary.circulation.core.model.BookReadModel;
+import com.ffr.booklibrary.circulation.core.domain.model.Book;
+import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
+import com.ffr.booklibrary.circulation.core.domain.model.BookId;
+import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

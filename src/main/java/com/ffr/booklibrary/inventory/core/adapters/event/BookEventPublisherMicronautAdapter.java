@@ -3,10 +3,9 @@ package com.ffr.booklibrary.inventory.core.adapters.event;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import io.micronaut.context.event.ApplicationEventPublisher;
-
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
 public class BookEventPublisherMicronautAdapter implements BookEventPublisher {

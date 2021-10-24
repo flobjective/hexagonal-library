@@ -1,15 +1,14 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookAlreadyIssuedException;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookAlreadyIssuedToUserException;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookCannotBeReturnedByUserException;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookNotIssuedException;
-import org.junit.jupiter.api.Test;
-
 import java.time.Clock;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class BookTest {
 
@@ -76,7 +75,9 @@ class BookTest {
     UserId userId = new UserId(UUID.randomUUID());
     book.issueToUser(userId);
 
-    assertThrows(BookCannotBeReturnedByUserException.class, () -> book.returnBook(new UserId(UUID.randomUUID())));
+    assertThrows(
+        BookCannotBeReturnedByUserException.class,
+        () -> book.returnBook(new UserId(UUID.randomUUID())));
   }
 
   @Test

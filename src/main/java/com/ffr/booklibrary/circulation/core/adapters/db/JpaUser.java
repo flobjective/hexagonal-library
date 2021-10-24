@@ -1,15 +1,14 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.domain.model.User;
+import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -24,9 +23,6 @@ public class JpaUser {
   private String username;
 
   public User toUser() {
-    return User.builder()
-        .id(this.id)
-        .username(this.username)
-        .build();
+    return User.builder().id(this.id).username(this.username).build();
   }
 }

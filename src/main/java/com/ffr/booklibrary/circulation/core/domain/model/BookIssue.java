@@ -1,15 +1,14 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookCannotBeRenewedException;
-import lombok.Getter;
-import lombok.experimental.Accessors;
-import lombok.experimental.SuperBuilder;
-
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 @SuperBuilder()
 @Getter

@@ -4,10 +4,9 @@ import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepos
 import com.ffr.booklibrary.circulation.core.application.services.CirculationService;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.event.ApplicationEventPublisher;
-
+import java.time.Clock;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.Clock;
 
 @Factory
 public class CirculationDomainConfig {

@@ -2,12 +2,11 @@ package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.domain.model.BookIssue;
 import com.ffr.booklibrary.circulation.core.domain.model.UserId;
-import lombok.*;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "circulation_book_issue")
@@ -18,28 +17,27 @@ import java.util.UUID;
 @AllArgsConstructor
 public class JpaBookIssue {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-    @Column
-    private Instant expirationTime;
+  @Column private Instant expirationTime;
 
-    @Column
-    private UUID userId;
+  @Column private UUID userId;
 
-    @OneToMany(mappedBy = "issueId")
-    private List<JpaBookRenewal> renewals;
+  @OneToMany(mappedBy = "issueId")
+  private List<JpaBookRenewal> renewals;
 
-    public static JpaBookIssue from(final BookIssue bookIssue) {
-        return JpaBookIssue.builder().id(bookIssue.id())
-                .userId(bookIssue.userId().id())
-                .expirationTime(bookIssue.expirationTime())
-//                .renewals(bookIssue.renewals())
-                .build();
-    }
+  public static JpaBookIssue from(final BookIssue bookIssue) {
+    return JpaBookIssue.builder()
+        .id(bookIssue.id())
+        .userId(bookIssue.userId().id())
+        .expirationTime(bookIssue.expirationTime())
+        //                .renewals(bookIssue.renewals())
+        .build();
+  }
 
-    public BookIssue toBookIssue() {
-        return BookIssue.builder().userId(new UserId(this.userId)).build();
-    }
+  public BookIssue toBookIssue() {
+    return BookIssue.builder().userId(new UserId(this.userId)).build();
+  }
 }

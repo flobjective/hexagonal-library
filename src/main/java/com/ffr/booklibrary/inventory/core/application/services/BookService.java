@@ -8,10 +8,9 @@ import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPu
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
 import com.ffr.booklibrary.shared.events.BookAddedEvent;
-
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 
 public class BookService implements AddBook, ListBooks {
 
@@ -36,7 +35,9 @@ public class BookService implements AddBook, ListBooks {
     savedBook.ifPresent(
         presentBook ->
             this.bookEventPublisher.publishEvents(
-                List.of(BookAddedEvent.create(presentBook.id(), presentBook.inventoryNumber().toString()))));
+                List.of(
+                    BookAddedEvent.create(
+                        presentBook.id(), presentBook.inventoryNumber().toString()))));
     return savedBook;
   }
 

@@ -1,11 +1,10 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-
-import java.util.UUID;
 
 @Getter
 @Accessors(fluent = true)
@@ -13,6 +12,5 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class UserId {
 
-    private UUID id;
-
+  private UUID id;
 }

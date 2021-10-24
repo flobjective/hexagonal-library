@@ -1,15 +1,14 @@
 package com.ffr.booklibrary.inventory.core.application.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.domain.model.*;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BookServiceTest {
 

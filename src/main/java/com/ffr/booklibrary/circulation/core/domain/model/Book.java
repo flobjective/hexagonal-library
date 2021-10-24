@@ -1,12 +1,11 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.*;
+import java.time.Clock;
+import java.time.Duration;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-
-import java.time.Clock;
-import java.time.Duration;
 
 @SuperBuilder
 @Getter
@@ -87,5 +86,4 @@ public class Book extends BaseEntity {
   private boolean isReserved() {
     return this.currentReservation != null;
   }
-
 }

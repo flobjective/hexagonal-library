@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class OLBookIdentifiers {
 
-    @JsonProperty("isbn_10")
-    private String isbn10;
+  @JsonProperty("isbn_10")
+  private String isbn10;
 
-    @JsonProperty("isbn_13")
-    private String isbn13;
+  @JsonProperty("isbn_13")
+  private String isbn13;
 }

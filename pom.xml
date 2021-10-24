@@ -24,6 +24,7 @@
     <micronaut.runtime>netty</micronaut.runtime>
     <lombok.version>1.18.20</lombok.version>
     <archunit.version>0.20.0</archunit.version>
+    <spotless.version>2.17.2</spotless.version>
   </properties>
 
   <repositories>
@@ -161,6 +162,11 @@
       <version>${archunit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.diffplug.spotless</groupId>
+      <artifactId>spotless-maven-plugin</artifactId>
+      <version>${spotless.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -202,6 +208,28 @@
             <arg>-Amicronaut.processing.group=com.ffr</arg>
             <arg>-Amicronaut.processing.module=hexagonal</arg>
           </compilerArgs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.version}</version>
+        <configuration>
+          <!-- define a language-specific format -->
+          <java>
+            <!-- no need to specify files, inferred automatically, but you can if you want -->
+
+            <!-- apply a specific flavor of google-java-format and reflow long strings -->
+            <googleJavaFormat>
+              <version>1.11.0</version>
+              <style>GOOGLE</style>
+              <reflowLongStrings>true</reflowLongStrings>
+            </googleJavaFormat>
+
+            <!-- make sure every file has the following copyright header.
+              optionally, Spotless can set copyright years by digging
+              through git history (see "license" section below) -->
+          </java>
         </configuration>
       </plugin>
     </plugins>

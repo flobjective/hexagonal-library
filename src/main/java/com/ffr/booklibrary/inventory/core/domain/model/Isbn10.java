@@ -9,5 +9,5 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class Isbn10 {
 
-    private final String value;
+  private final String value;
 }

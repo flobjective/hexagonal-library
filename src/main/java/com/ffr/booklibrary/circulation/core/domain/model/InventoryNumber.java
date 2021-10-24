@@ -4,14 +4,14 @@ import java.util.UUID;
 
 public class InventoryNumber {
 
-    private UUID inventoryId;
+  private UUID inventoryId;
 
-    public InventoryNumber(final String string) {
-        this.inventoryId = UUID.fromString(string);
-    }
+  public InventoryNumber(final String string) {
+    this.inventoryId = UUID.fromString(string);
+  }
 
-    @Override
-    public String toString() {
-        return this.inventoryId == null ? "" : this.inventoryId.toString();
-    }
+  @Override
+  public String toString() {
+    return this.inventoryId == null ? "" : this.inventoryId.toString();
+  }
 }

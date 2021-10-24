@@ -9,5 +9,5 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class BookTitle {
 
-    private final String title;
+  private final String title;
 }

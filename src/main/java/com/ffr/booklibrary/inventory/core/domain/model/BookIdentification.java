@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Builder
 public class BookIdentification {
 
-    private final Isbn10 isbn10;
+  private final Isbn10 isbn10;
 
-    private final Isbn13 isbn13;
+  private final Isbn13 isbn13;
 }

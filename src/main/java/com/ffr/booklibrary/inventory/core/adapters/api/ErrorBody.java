@@ -7,6 +7,5 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 public class ErrorBody {
 
-    private final String errorMessage;
-
+  private final String errorMessage;
 }

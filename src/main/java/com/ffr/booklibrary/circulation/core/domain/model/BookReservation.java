@@ -1,12 +1,11 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
-import lombok.Getter;
-import lombok.experimental.Accessors;
-import lombok.experimental.SuperBuilder;
-
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter

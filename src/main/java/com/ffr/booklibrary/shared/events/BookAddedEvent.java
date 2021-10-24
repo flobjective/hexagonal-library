@@ -1,14 +1,13 @@
 package com.ffr.booklibrary.shared.events;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.Instant;
-import java.util.UUID;
 
 public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayload> {
 
@@ -23,10 +22,7 @@ public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayl
     this.payload = new BookAddedPayload(bookId, inventoryNumber);
   }
 
-  public BookAddedEvent(
-          final UUID eventId,
-          final Instant publishedDate,
-          BookAddedPayload payload) {
+  public BookAddedEvent(final UUID eventId, final Instant publishedDate, BookAddedPayload payload) {
     super("BookAddedEvent", eventId, publishedDate);
     this.payload = payload;
   }
@@ -47,10 +43,8 @@ public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayl
   @Accessors(fluent = true)
   public static class BookAddedPayload {
 
-    @JsonProperty
-    private UUID bookId;
+    @JsonProperty private UUID bookId;
 
-    @JsonProperty
-    private String inventoryNumber;
+    @JsonProperty private String inventoryNumber;
   }
 }

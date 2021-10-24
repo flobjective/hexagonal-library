@@ -1,8 +1,6 @@
 package com.ffr.booklibrary.circulation.core.application.ports.incoming;
 
 import com.ffr.booklibrary.circulation.core.domain.model.BookId;
-import com.ffr.booklibrary.circulation.core.domain.model.BookIssue;
-import com.ffr.booklibrary.circulation.core.domain.model.BookIssueId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -11,5 +9,5 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(fluent = true)
 public class ReturnBookCommand {
-    private final BookId bookId;
+  private final BookId bookId;
 }

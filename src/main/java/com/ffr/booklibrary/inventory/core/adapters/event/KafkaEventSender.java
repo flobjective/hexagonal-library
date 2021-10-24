@@ -3,13 +3,12 @@ package com.ffr.booklibrary.inventory.core.adapters.event;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.context.annotation.Property;
+import java.util.UUID;
+import java.util.concurrent.Future;
+import javax.inject.Singleton;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-
-import javax.inject.Singleton;
-import java.util.UUID;
-import java.util.concurrent.Future;
 
 @Singleton
 public class KafkaEventSender {
@@ -35,7 +34,6 @@ public class KafkaEventSender {
   }
 
   public Future send(final BaseDomainEvent event) {
-    return kafkaProducer.send(
-         new ProducerRecord<>("books", event.eventId(), event));
+    return kafkaProducer.send(new ProducerRecord<>("books", event.eventId(), event));
   }
 }

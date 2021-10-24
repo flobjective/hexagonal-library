@@ -5,12 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import com.ffr.booklibrary.shared.events.BookAddedEvent;
-import lombok.AllArgsConstructor;
-
-import javax.inject.Singleton;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import javax.inject.Singleton;
+import lombok.AllArgsConstructor;
 
 @Singleton
 @AllArgsConstructor
@@ -22,9 +21,11 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
   public void save(final BaseDomainEvent event) {
     JsonNode node = new ObjectMapper().convertValue(event.getEventPayload(), JsonNode.class);
     if (eventsJpaRepository.existsById(event.eventId())) {
-      eventsJpaRepository.update(JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
+      eventsJpaRepository.update(
+          JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
     } else {
-      eventsJpaRepository.save(JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
+      eventsJpaRepository.save(
+          JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
     }
   }
 
@@ -37,7 +38,9 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
             (jpaEvent -> {
               switch (jpaEvent.eventName()) {
                 case "BookAddedEvent":
-                  var eventPayload = mapper.convertValue(jpaEvent.eventPayload(), BookAddedEvent.BookAddedPayload.class);
+                  var eventPayload =
+                      mapper.convertValue(
+                          jpaEvent.eventPayload(), BookAddedEvent.BookAddedPayload.class);
                   return new BookAddedEvent(jpaEvent.id(), jpaEvent.publishedDate(), eventPayload);
                 default:
                   return null;

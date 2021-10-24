@@ -4,7 +4,6 @@ import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookReposit
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
 import com.ffr.booklibrary.inventory.core.domain.model.BookIdentification;
 import com.ffr.booklibrary.inventory.core.domain.model.BookTitle;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;

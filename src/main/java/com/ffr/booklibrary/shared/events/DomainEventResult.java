@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class DomainEventResult<T, E extends BaseDomainEvent> {
 
-    private final E event;
-    private final T result;
-
+  private final E event;
+  private final T result;
 }

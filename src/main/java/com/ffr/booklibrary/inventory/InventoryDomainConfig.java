@@ -13,7 +13,6 @@ import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepos
 import com.ffr.booklibrary.inventory.core.application.services.BookService;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.event.ApplicationEventPublisher;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -49,7 +48,8 @@ public class InventoryDomainConfig {
   BookEventPublisher bookEventPublisher() {
     //        return new BookEventPublisherMicronautAdapter(this.eventPublisher);
     System.out.println(this.kafkaEventSender);
-    return new BookEventPublisherTransactionalOutboxAdapter(this.eventsRepository(), this.kafkaEventSender);
+    return new BookEventPublisherTransactionalOutboxAdapter(
+        this.eventsRepository(), this.kafkaEventSender);
   }
 
   @Singleton

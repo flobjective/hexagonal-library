@@ -1,17 +1,56 @@
 package com.ffr.booklibrary.shared.events;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.Instant;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@Accessors(fluent = true)
-public class BookAddedEvent {
+public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayload> {
 
+  private BookAddedPayload payload;
+
+  public BookAddedEvent(
+      final UUID eventId,
+      final Instant publishedDate,
+      final UUID bookId,
+      final String inventoryNumber) {
+    super("BookAddedEvent", eventId, publishedDate);
+    this.payload = new BookAddedPayload(bookId, inventoryNumber);
+  }
+
+  public BookAddedEvent(
+          final UUID eventId,
+          final Instant publishedDate,
+          BookAddedPayload payload) {
+    super("BookAddedEvent", eventId, publishedDate);
+    this.payload = payload;
+  }
+
+  public static BookAddedEvent create(final UUID bookId, final String inventoryNumber) {
+    return new BookAddedEvent(UUID.randomUUID(), null, bookId, inventoryNumber);
+  }
+
+  @Override
+  public BookAddedPayload getEventPayload() {
+    return this.payload;
+  }
+
+  @AllArgsConstructor
+  @NoArgsConstructor
+  @Getter
+  @Setter
+  @Accessors(fluent = true)
+  public static class BookAddedPayload {
+
+    @JsonProperty
     private UUID bookId;
 
+    @JsonProperty
     private String inventoryNumber;
+  }
 }

@@ -19,6 +19,7 @@
     <micronaut.version>2.4.2</micronaut.version>
     <micronaut.data.version>2.3.1</micronaut.data.version>
     <micronaut.hibernate-validator.version>2.0.0</micronaut.hibernate-validator.version>
+    <hibernate-types.version>2.13.0</hibernate-types.version>
     <exec.mainClass>com.ffr.booklibrary.BookLibraryApplication</exec.mainClass>
     <micronaut.runtime>netty</micronaut.runtime>
     <lombok.version>1.18.20</lombok.version>
@@ -93,6 +94,11 @@
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-hibernate-jpa</artifactId>
       <version>${micronaut.data.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.vladmihalcea</groupId>
+      <artifactId>hibernate-types-55</artifactId>
+      <version>${hibernate-types.version}</version>
     </dependency>
     <dependency>
       <groupId>io.micronaut.configuration</groupId>

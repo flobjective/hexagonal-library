@@ -1,8 +1,6 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.*;
-import com.ffr.booklibrary.shared.events.DomainEvent;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
@@ -90,9 +88,4 @@ public class Book extends BaseEntity {
     return this.currentReservation != null;
   }
 
-  @AllArgsConstructor
-  public static class BookIssuedEvent implements DomainEvent {
-    private BookId bookId;
-    private UserId userId;
-  }
 }

@@ -4,6 +4,9 @@ import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 
 import java.util.List;
 
-public interface BookEventPublisher {
-  void publishEvents(final List<BaseDomainEvent> events);
+public interface EventsRepository {
+
+    void save(BaseDomainEvent event);
+
+    List<BaseDomainEvent> findAllUnpublished();
 }

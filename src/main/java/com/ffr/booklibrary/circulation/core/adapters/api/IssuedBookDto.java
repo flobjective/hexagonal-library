@@ -9,7 +9,6 @@ import java.time.Instant;
 
 @AllArgsConstructor
 @Data
-@Jacksonized
 public class IssuedBookDto {
 
     private String bookId;

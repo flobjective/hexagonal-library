@@ -15,6 +15,9 @@ jpa:
       hibernate:
         physical_naming_strategy: "io.micronaut.data.hibernate.naming.DefaultPhysicalNamingStrategy"
         show_sql: true
+        types:
+          print:
+            banner=false:
     entity-scan:
       packages:
         - 'com.ffr.booklibrary.inventory.core.adapters.db'
@@ -25,6 +28,9 @@ flyway:
       enabled: true
       locations:
         - classpath:databasemigrations
-#kafka:
-#  bootstrap:
-#    servers: localhost:9092
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  producers:
+    default:
+      retries: 5

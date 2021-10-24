@@ -12,12 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = {})
 @Retention(RetentionPolicy.RUNTIME)
-// From https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
-@Pattern(
-    regexp =
-        "^(?:ISBN(?:-1[03])?:?●)?(?=[0-9X]{10}$|(?=(?:[0-9]+[-●]){3})↵\n"
-            + "[-●0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[-●]){4})[-●0-9]{17}$)↵\n"
-            + "(?:97[89][-●]?)?[0-9]{1,5}[-●]?[0-9]+[-●]?[0-9]+[-●]?[0-9X]$")
+@Pattern(regexp = "^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")
 @ReportAsSingleViolation
 public @interface Isbn {
     String message() default "{invalid.isbn}";

@@ -24,7 +24,6 @@ public class BookController {
     private ListBooks listBooks;
 
     @Post("/add")
-    @Transactional
     public AddBookResponse addNewBook(@Body @Valid final AddBookBody addBookBody) {
         var book = this.addBook.addBook(addBookBody.toCommand());
         return AddBookResponse.of(book.orElseThrow(() -> new BookNotFoundException(addBookBody.isbn())));

@@ -20,6 +20,6 @@ public class AddBookEventAdapter implements ApplicationEventListener<BookAddedEv
     @Override
     @Async
     public void onApplicationEvent(final BookAddedEvent event) {
-        addBookToCirculation.addBookToCirculation(new InventoryNumber(event.inventoryNumber()));
+        addBookToCirculation.addBookToCirculation(new InventoryNumber(event.getEventPayload().inventoryNumber()));
     }
 }

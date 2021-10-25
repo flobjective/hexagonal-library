@@ -4,10 +4,11 @@ import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPu
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import io.micronaut.scheduling.annotation.Scheduled;
+import lombok.AllArgsConstructor;
+
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import javax.inject.Singleton;
-import lombok.AllArgsConstructor;
 
 @Singleton
 @AllArgsConstructor

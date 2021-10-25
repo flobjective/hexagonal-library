@@ -20,8 +20,8 @@ jpa:
             banner=false:
     entity-scan:
       packages:
-        - 'com.ffr.booklibrary.inventory.core.adapters.db'
-        - 'com.ffr.booklibrary.circulation.core.adapters.db'
+        - "com.ffr.booklibrary.inventory.core.adapters.db"
+        - "com.ffr.booklibrary.circulation.core.adapters.db"
 flyway:
   datasources:
     default:
@@ -31,6 +31,6 @@ flyway:
 kafka:
   bootstrap:
     servers: localhost:9092
-  producers:
-    default:
-      retries: 5
+inventory:
+  kafka:
+    topic: "books"

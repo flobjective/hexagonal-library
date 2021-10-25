@@ -1,4 +1,8 @@
-##
+## Setup
+
+
+
+## Interacting with the API
 
 Curl commands
 

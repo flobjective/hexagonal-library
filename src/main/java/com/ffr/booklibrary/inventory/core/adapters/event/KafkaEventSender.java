@@ -3,11 +3,10 @@ package com.ffr.booklibrary.inventory.core.adapters.event;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Value;
 import java.util.UUID;
 import java.util.concurrent.Future;
 import javax.inject.Singleton;
-
-import io.micronaut.context.annotation.Value;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -27,7 +26,9 @@ public class KafkaEventSender {
               properties = {
                 @Property(name = ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, value = "true"),
                 @Property(name = ProducerConfig.ACKS_CONFIG, value = "all"),
-                @Property(name = ProducerConfig.TRANSACTIONAL_ID_CONFIG, value = "inventory-book-1"),
+                @Property(
+                    name = ProducerConfig.TRANSACTIONAL_ID_CONFIG,
+                    value = "inventory-book-1"),
                 @Property(
                     name = ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                     value = "org.apache.kafka.common.serialization.UUIDSerializer"),

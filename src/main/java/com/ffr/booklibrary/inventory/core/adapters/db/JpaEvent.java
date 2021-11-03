@@ -24,22 +24,6 @@ public class JpaEvent extends JpaBaseEntity {
     return id;
   }
 
-  public String getEventName() {
-    return eventName;
-  }
-
-  public Instant getCreationDate() {
-    return creationDate;
-  }
-
-  public Instant getPublishedDate() {
-    return publishedDate;
-  }
-
-  public JsonNode getEventPayload() {
-    return eventPayload;
-  }
-
   @Id private UUID id;
 
   @Column(nullable = false)

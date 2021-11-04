@@ -37,7 +37,7 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
         .map(
             (jpaEvent -> {
               switch (jpaEvent.eventName()) {
-                case "BookAddedEvent":
+                case BookAddedEvent.EVENT_NAME:
                   var eventPayload =
                       mapper.convertValue(
                           jpaEvent.eventPayload(), BookAddedEvent.BookAddedPayload.class);

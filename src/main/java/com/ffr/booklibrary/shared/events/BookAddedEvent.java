@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 
 public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayload> {
 
+  public static final String EVENT_NAME = "BookAddedEvent";
+
   private BookAddedPayload payload;
 
   public BookAddedEvent(
@@ -18,12 +20,12 @@ public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayl
       final Instant publishedDate,
       final UUID bookId,
       final String inventoryNumber) {
-    super("BookAddedEvent", eventId, publishedDate);
+    super(EVENT_NAME, eventId, publishedDate);
     this.payload = new BookAddedPayload(bookId, inventoryNumber);
   }
 
   public BookAddedEvent(final UUID eventId, final Instant publishedDate, BookAddedPayload payload) {
-    super("BookAddedEvent", eventId, publishedDate);
+    super(EVENT_NAME, eventId, publishedDate);
     this.payload = payload;
   }
 

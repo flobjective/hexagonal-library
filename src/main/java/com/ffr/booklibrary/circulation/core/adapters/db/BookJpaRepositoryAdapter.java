@@ -1,10 +1,8 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
-import com.ffr.booklibrary.circulation.core.domain.model.Book;
-import com.ffr.booklibrary.circulation.core.domain.model.BookId;
-import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
-import com.ffr.booklibrary.circulation.core.domain.model.UserId;
+import com.ffr.booklibrary.circulation.core.domain.model.*;
+import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +38,18 @@ public class BookJpaRepositoryAdapter implements BookRepository {
   public List<BookReadModel> listIssuedBooks(final UserId userId) {
     return this.bookJpaRepository.findIssuedByUserId(userId.id()).stream()
         .map(JpaBook::toReadModel)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Book> findBooksWithExpiredReservations(final Clock clock) {
+    return bookJpaRepository.findBooksWithExpiredReservations(clock.instant());
+  }
+
+  @Override
+  public List<AvailableBookReadModel> listAvailableBooks() {
+    return this.bookJpaRepository.findAvailable().stream()
+        .map(JpaBook::toAvailableReadModel)
         .collect(Collectors.toList());
   }
 }

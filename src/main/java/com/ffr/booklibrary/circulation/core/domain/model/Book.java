@@ -26,33 +26,38 @@ public class Book extends BaseEntity {
       throw new BookAlreadyIssuedException();
     }
     if (isReserved()) {
-      if (!this.currentReservation.isActive(this.clock)) {
+      if (this.currentReservation.hasExpired(this.clock)) {
         expireReservation();
-      } else if (this.currentReservation.userId().equals(userId)) {
+      } else if (this.currentReservation.isReservedBy(userId)) {
         redeemReservation();
       } else {
         throw new BookIsReservedException();
       }
     }
     this.currentBookIssue =
-        BookIssue.createIssue(userId, clock.instant().plus(Duration.ofDays(14)));
+        BookIssue.createIssue(userId, this.clock.instant().plus(Duration.ofDays(14)));
     return this.currentBookIssue;
   }
 
   public void returnBook(final UserId userId) {
     if (!isIssued()) {
       throw new BookNotIssuedException();
-    } else if (!this.currentBookIssue.userId().equals(userId)) {
+    } else if (!isIssuedTo(userId)) {
       throw new BookCannotBeReturnedByUserException();
     } else {
+      // Raise domain event ?
       this.currentBookIssue = null;
     }
+  }
+
+  private boolean isIssuedTo(final UserId userId) {
+    return isIssued() && this.currentBookIssue.userId().equals(userId);
   }
 
   public BookReservation reserveToUser(final UserId userId) {
     if (!isIssued()) {
       throw new BookNotIssuedException();
-    } else if (this.currentBookIssue.userId().equals(userId)) {
+    } else if (isIssuedTo(userId)) {
       throw new BookAlreadyIssuedToUserException();
     } else {
       this.currentReservation = BookReservation.create(this.clock, userId);
@@ -63,13 +68,13 @@ public class Book extends BaseEntity {
   public void extendIssue(final UserId userId) {
     if (!isIssued()) {
       throw new BookNotIssuedException();
-    } else if (!this.currentBookIssue.userId().equals(userId)) {
+    } else if (isReserved()) {
       throw new BookCannotBeExtendedByUserException();
     }
     this.currentBookIssue.renew(this.clock);
   }
 
-  private void expireReservation() {
+  public void expireReservation() {
     // TODO: Create Event ?
     this.currentReservation = null;
   }

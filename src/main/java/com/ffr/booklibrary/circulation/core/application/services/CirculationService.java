@@ -2,12 +2,11 @@ package com.ffr.booklibrary.circulation.core.application.services;
 
 import com.ffr.booklibrary.circulation.core.application.ports.incoming.*;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
-import com.ffr.booklibrary.circulation.core.domain.model.Book;
-import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
-import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
-import com.ffr.booklibrary.circulation.core.domain.model.UserId;
+import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
+import com.ffr.booklibrary.circulation.core.domain.model.*;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookNotFoundException;
 import io.micronaut.context.event.ApplicationEventPublisher;
+import io.micronaut.scheduling.annotation.Scheduled;
 import java.time.Clock;
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +15,11 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CirculationService
-    implements AddBookToCirculation, IssueBook, ReturnBook, ListIssuedBooks {
+    implements AddBookToCirculation, IssueBook, ReturnBook, ListIssuedBooks, ListAvailableBooks {
 
   private final Clock clock;
   private final BookRepository bookRepository;
+  private final UserRepository userRepository;
   private final ApplicationEventPublisher applicationEventPublisher;
 
   @Override
@@ -41,7 +41,7 @@ public class CirculationService
         this.bookRepository
             .find(returnBookCommand.bookId())
             .orElseThrow(() -> new BookNotFoundException(returnBookCommand.bookId()));
-    book.returnBook(new UserId(UUID.randomUUID()));
+    book.returnBook(returnBookCommand.userId());
     this.bookRepository.save(book);
   }
 
@@ -55,5 +55,18 @@ public class CirculationService
   public void addBookToCirculation(final InventoryNumber inventoryNumber) {
     Book newBook = Book.create(this.clock, inventoryNumber);
     this.bookRepository.insert(newBook);
+  }
+
+  @Scheduled(initialDelay = "20s", fixedDelay = "10s")
+  private void expireReservations() {
+    var books = this.bookRepository.findBooksWithExpiredReservations(this.clock);
+    books.stream()
+        .filter(book -> book.currentReservation().hasExpired(this.clock))
+        .forEach(Book::expireReservation);
+  }
+
+  @Override
+  public List<AvailableBookReadModel> listAvailableBooks() {
+    return this.bookRepository.listAvailableBooks();
   }
 }

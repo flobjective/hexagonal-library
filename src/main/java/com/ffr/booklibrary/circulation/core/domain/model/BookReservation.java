@@ -23,7 +23,11 @@ public class BookReservation extends BaseEntity {
         .build();
   }
 
-  public boolean isActive(final Clock clock) {
-    return clock.instant().isBefore(expirationTime);
+  public boolean hasExpired(final Clock nowClock) {
+    return nowClock.instant().isAfter(expirationTime);
+  }
+
+  public boolean isReservedBy(final UserId userId) {
+    return this.userId.equals(userId);
   }
 }

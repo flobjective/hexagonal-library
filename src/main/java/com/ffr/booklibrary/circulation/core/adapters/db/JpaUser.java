@@ -5,6 +5,8 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,10 @@ public class JpaUser {
   @Id private UUID id;
 
   private String username;
+
+  public static JpaUser of(final User user) {
+    return new JpaUser(user.id(), user.getUsername());
+  }
 
   public User toUser() {
     return User.builder().id(this.id).username(this.username).build();

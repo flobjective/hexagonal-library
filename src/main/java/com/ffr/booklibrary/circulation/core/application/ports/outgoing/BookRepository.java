@@ -1,9 +1,7 @@
 package com.ffr.booklibrary.circulation.core.application.ports.outgoing;
 
-import com.ffr.booklibrary.circulation.core.domain.model.Book;
-import com.ffr.booklibrary.circulation.core.domain.model.BookId;
-import com.ffr.booklibrary.circulation.core.domain.model.BookReadModel;
-import com.ffr.booklibrary.circulation.core.domain.model.UserId;
+import com.ffr.booklibrary.circulation.core.domain.model.*;
+import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +13,8 @@ public interface BookRepository {
   Book save(Book book);
 
   List<BookReadModel> listIssuedBooks(UserId userId);
+
+  List<Book> findBooksWithExpiredReservations(Clock clock);
+
+  List<AvailableBookReadModel> listAvailableBooks();
 }

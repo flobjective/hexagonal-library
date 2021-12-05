@@ -24,7 +24,7 @@ public class BookEventPublisherTransactionalOutboxAdapter implements BookEventPu
     }
   }
 
-  @Scheduled(initialDelay = "20s", fixedDelay = "10s")
+//  @Scheduled(initialDelay = "20s", fixedDelay = "10s")
   void publishToBroker() {
     try {
       for (BaseDomainEvent event : this.eventsRepository.findAllUnpublished()) {

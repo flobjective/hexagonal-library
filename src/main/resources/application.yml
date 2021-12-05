@@ -28,9 +28,9 @@ flyway:
       enabled: true
       locations:
         - classpath:databasemigrations
-kafka:
-  bootstrap:
-    servers: localhost:9092
-inventory:
-  kafka:
-    topic: "books"
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092
+#inventory:
+#  kafka:
+#    topic: "books"

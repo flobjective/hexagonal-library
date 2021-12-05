@@ -16,7 +16,7 @@ public class AvailableBookDto {
 
   public static AvailableBookDto of(final AvailableBookReadModel availableBookReadModel) {
     return new AvailableBookDto(
-        availableBookReadModel.bookId().toString(),
+        availableBookReadModel.bookId().id().toString(),
         availableBookReadModel.inventoryNumber().toString());
   }
 }

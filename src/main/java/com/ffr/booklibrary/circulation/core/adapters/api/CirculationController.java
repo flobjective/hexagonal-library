@@ -2,10 +2,8 @@ package com.ffr.booklibrary.circulation.core.adapters.api;
 
 import com.ffr.booklibrary.circulation.core.application.ports.incoming.*;
 import com.ffr.booklibrary.circulation.core.domain.model.BookId;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
+import io.micronaut.http.annotation.*;
 import io.micronaut.validation.Validated;
 
 import javax.inject.Inject;
@@ -26,13 +24,13 @@ public class CirculationController {
   @Inject private ReturnBook returnBook;
 
   @Get(value = "/available")
-  public AvailableBooksResponse listIssuedBooks() {
+  public AvailableBooksResponse listAvailableBooks() {
     return AvailableBooksResponse.of(listAvailableBooks.listAvailableBooks());
   }
 
-  @Post(value = "/issued")
-  public IssuedBooksResponse listIssuedBooks(@Body @Valid IssuedToUserIdDto issuedToUserIdDto) {
-    return IssuedBooksResponse.of(listIssuedBooks.listIssuedBooks(issuedToUserIdDto.toUserId()));
+  @Get(value = "/issued")
+  public IssuedBooksResponse listIssuedBooks(@QueryValue @NotBlank @UUIDValidate String userId) {
+    return IssuedBooksResponse.of(listIssuedBooks.listIssuedBooks(new UserId(UUID.fromString(userId))));
   }
 
   @Post(value = "/available/{bookId}/issue")

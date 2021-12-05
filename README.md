@@ -30,10 +30,17 @@ curl -X POST -H "Content-Type: application/json" \
 http://localhost:8080/book/add
 ```
 
+Issueing a book to a user using a bookId (cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f) and userId (3bfc01e8-b586-453c-923d-7776bfa39273)
+
+```shell
+curl -X POST -H "Content-Type: application/json" \
+-d '{"userId": "3bfc01e8-b586-453c-923d-7776bfa39273"}' \
+http://localhost:8080/circulation/available/cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f/issue 
+```
+
 List books for circulation:
 
 ```shell
 curl http://localhost:8080/circulation/available // currently available books
-curl http://localhost:8080/circulation/issued // currently issued (=not available) books
-
+curl http://localhost:8080/circulation/issued?user={userId} // currently issued (=not available) books for a specific reader
 ```

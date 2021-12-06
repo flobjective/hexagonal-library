@@ -19,7 +19,7 @@ public class BookController {
 
   @Inject private ListBooks listBooks;
 
-  @Post("/add")
+  @Put()
   public RegisterBookResponse addNewBook(@Body @Valid final RegisterBookBody registerBookBody) {
     var book = this.registerBook.registerBook(registerBookBody.toCommand());
     return RegisterBookResponse.of(

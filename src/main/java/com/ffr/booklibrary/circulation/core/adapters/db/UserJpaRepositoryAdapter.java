@@ -2,9 +2,8 @@ package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.User;
-import lombok.AllArgsConstructor;
-
 import javax.inject.Singleton;
+import lombok.AllArgsConstructor;
 
 @Singleton
 @AllArgsConstructor

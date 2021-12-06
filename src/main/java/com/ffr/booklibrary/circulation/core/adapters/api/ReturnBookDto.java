@@ -2,11 +2,10 @@ package com.ffr.booklibrary.circulation.core.adapters.api;
 
 import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import io.micronaut.core.annotation.Introspected;
+import java.util.UUID;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
 @Data
 @Introspected

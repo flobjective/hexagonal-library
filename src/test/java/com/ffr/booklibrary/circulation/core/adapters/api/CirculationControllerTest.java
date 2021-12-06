@@ -1,5 +1,8 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.Book;
@@ -12,15 +15,11 @@ import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import org.junit.jupiter.api.Test;
-
-import javax.inject.Inject;
 import java.time.Clock;
 import java.util.List;
 import java.util.UUID;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import javax.inject.Inject;
+import org.junit.jupiter.api.Test;
 
 @MicronautTest(transactional = false)
 class CirculationControllerTest {

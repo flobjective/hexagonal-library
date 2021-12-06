@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.domain.model.*;
+import com.ffr.booklibrary.shared.events.BookAddedEvent;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,14 +35,31 @@ class BookServiceTest {
   }
 
   @Test
-  @DisplayName("Should save a book in repository")
-  public void shouldSaveExistingBook() {
+  @DisplayName("Should save book")
+  public void shouldSaveBook() {
     var bookService =
         new BookService(
             this.bookDetailsProvider, this.bookRepository, new FakeBookEventPublisher());
     var addedBook = bookService.addBook(new AddBookCommand("978-0345418777"));
     assertThat(addedBook).isNotEmpty();
     assertThat(bookRepository.getBookById(addedBook.get().id())).isNotNull();
+  }
+
+  @Test
+  @DisplayName("Should save book and publish event")
+  public void shouldSaveBookAndPublishEvent() {
+    var fakeBookEventPublisher = new FakeBookEventPublisher();
+    var bookService =
+        new BookService(this.bookDetailsProvider, this.bookRepository, fakeBookEventPublisher);
+    var addedBook = bookService.addBook(new AddBookCommand("978-0345418777"));
+    assertThat(addedBook).isNotEmpty();
+    assertThat(
+        fakeBookEventPublisher.containsEvent(
+            (event) ->
+                event instanceof BookAddedEvent
+                    && ((BookAddedEvent.BookAddedPayload) event.getEventPayload())
+                        .bookId()
+                        .equals(addedBook.get().id())));
   }
 
   @Test
@@ -55,7 +73,7 @@ class BookServiceTest {
   }
 
   @Test
-  @DisplayName("Should save a book in repository")
+  @DisplayName("Should list all books")
   public void shouldListBooks() {
     var bookService = new BookService(this.bookDetailsProvider, this.bookRepository, null);
     var books = bookService.listBooks();

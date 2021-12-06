@@ -10,4 +10,6 @@ import lombok.experimental.Accessors;
 public class AddBookCommand {
 
   private final String isbn;
+
+  private final boolean enableCirculation = true;
 }

@@ -9,7 +9,6 @@ import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.scheduling.annotation.Scheduled;
 import java.time.Clock;
 import java.util.List;
-import java.util.UUID;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 

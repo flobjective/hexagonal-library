@@ -9,13 +9,13 @@ Hexagonal architecture consisting of currently modules:
 
 See miro board: https://miro.com/app/board/o9J_lB2j3Ac=/?invite_link_id=718378742764
 
-## Setup
+## Start the app
 
 Start the setup with 
 
 ```shell
-docker-compose up
-./mvnw mn:run
+docker-compose up // dependencies
+./mvnw mn:run // start the micronaut app
 ```
 
 

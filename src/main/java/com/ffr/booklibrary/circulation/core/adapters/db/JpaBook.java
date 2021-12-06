@@ -1,7 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.domain.model.*;
-
 import java.time.Clock;
 import java.util.UUID;
 import javax.persistence.*;

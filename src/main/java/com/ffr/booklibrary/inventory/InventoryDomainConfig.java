@@ -2,8 +2,6 @@ package com.ffr.booklibrary.inventory;
 
 import com.ffr.booklibrary.inventory.core.adapters.db.*;
 import com.ffr.booklibrary.inventory.core.adapters.event.BookEventPublisherMicronautAdapter;
-import com.ffr.booklibrary.inventory.core.adapters.event.BookEventPublisherTransactionalOutboxAdapter;
-import com.ffr.booklibrary.inventory.core.adapters.event.KafkaEventSender;
 import com.ffr.booklibrary.inventory.core.adapters.openlibrary.OpenLibraryApi;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBook;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
@@ -28,7 +26,7 @@ public class InventoryDomainConfig {
 
   @Inject private OpenLibraryApi openLibraryApi;
 
-//  @Inject private KafkaEventSender kafkaEventSender;
+  //  @Inject private KafkaEventSender kafkaEventSender;
 
   @Singleton
   BookRepository bookRepository() {
@@ -47,10 +45,10 @@ public class InventoryDomainConfig {
 
   @Singleton
   BookEventPublisher bookEventPublisher() {
-            return new BookEventPublisherMicronautAdapter(this.eventPublisher);
-//    System.out.println(this.kafkaEventSender);
-//    return new BookEventPublisherTransactionalOutboxAdapter(
-//        this.eventsRepository(), this.kafkaEventSender);
+    return new BookEventPublisherMicronautAdapter(this.eventPublisher);
+    //    System.out.println(this.kafkaEventSender);
+    //    return new BookEventPublisherTransactionalOutboxAdapter(
+    //        this.eventsRepository(), this.kafkaEventSender);
   }
 
   @Singleton

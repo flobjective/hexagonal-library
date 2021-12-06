@@ -1,9 +1,8 @@
 package com.ffr.booklibrary.circulation.core.domain.model;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.UUID;
 
 @Getter
 @SuperBuilder

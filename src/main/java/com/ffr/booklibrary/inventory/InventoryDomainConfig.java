@@ -3,7 +3,7 @@ package com.ffr.booklibrary.inventory;
 import com.ffr.booklibrary.inventory.core.adapters.db.*;
 import com.ffr.booklibrary.inventory.core.adapters.event.BookEventPublisherMicronautAdapter;
 import com.ffr.booklibrary.inventory.core.adapters.openlibrary.OpenLibraryApi;
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBook;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
@@ -61,7 +61,7 @@ public class InventoryDomainConfig {
   }
 
   @Singleton
-  public AddBook addBook(final BookService bookService) {
+  public RegisterBook addBook(final BookService bookService) {
     return bookService;
   }
 

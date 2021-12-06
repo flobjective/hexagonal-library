@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CirculationService
-    implements AddBookToCirculation, IssueBook, ReturnBook, ListIssuedBooks, ListAvailableBooks {
+    implements RegisterBookToCirculation, IssueBook, ReturnBook, ListIssuedBooks, ListAvailableBooks {
 
   private final Clock clock;
   private final BookRepository bookRepository;

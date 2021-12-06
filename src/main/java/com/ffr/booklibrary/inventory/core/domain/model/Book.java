@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+// TODO: We need some behavior in here
 @Accessors(fluent = true)
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -16,7 +17,7 @@ public class Book extends BaseEntity {
 
   private final BookIdentification bookIdentification;
 
-  public static Book newBook(final Book book) {
+  public static Book cloneBook(final Book book) {
     return book.toBuilder().id(UUID.randomUUID()).inventoryNumber(InventoryNumber.create()).build();
   }
 }

@@ -7,16 +7,16 @@ import lombok.val;
 
 @AllArgsConstructor
 @Getter
-public class AddBookResponse {
+public class RegisterBookResponse {
 
   private String inventoryNumber;
   private String title;
   private String isbn10;
   private String isbn13;
 
-  public static AddBookResponse of(final Book book) {
+  public static RegisterBookResponse of(final Book book) {
     val bookIdentification = book.bookIdentification();
-    return new AddBookResponse(
+    return new RegisterBookResponse(
         book.inventoryNumber().toString(),
         book.title().title(),
         bookIdentification.isbn10().value(),

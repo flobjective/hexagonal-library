@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.inventory.core.adapters.api;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBookCommand;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.Isbn;
 import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotNull;
@@ -12,11 +12,11 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @Introspected
-public class AddBookBody {
+public class RegisterBookBody {
 
   @NotNull @Isbn private String isbn;
 
-  public AddBookCommand toCommand() {
-    return new AddBookCommand(this.isbn);
+  public RegisterBookCommand toCommand() {
+    return new RegisterBookCommand(this.isbn);
   }
 }

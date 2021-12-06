@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.inventory.core.adapters.api;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBook;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -15,15 +15,15 @@ import javax.validation.Valid;
 @Controller("/book")
 public class BookController {
 
-  @Inject private AddBook addBook;
+  @Inject private RegisterBook registerBook;
 
   @Inject private ListBooks listBooks;
 
   @Post("/add")
-  public AddBookResponse addNewBook(@Body @Valid final AddBookBody addBookBody) {
-    var book = this.addBook.addBook(addBookBody.toCommand());
-    return AddBookResponse.of(
-        book.orElseThrow(() -> new BookNotFoundException(addBookBody.isbn())));
+  public RegisterBookResponse addNewBook(@Body @Valid final RegisterBookBody registerBookBody) {
+    var book = this.registerBook.registerBook(registerBookBody.toCommand());
+    return RegisterBookResponse.of(
+        book.orElseThrow(() -> new BookNotFoundException(registerBookBody.isbn())));
   }
 
   @Get()

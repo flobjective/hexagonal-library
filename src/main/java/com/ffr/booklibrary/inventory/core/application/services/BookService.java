@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.inventory.core.application.services;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBook;
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBookCommand;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 
-public class BookService implements AddBook, ListBooks {
+public class BookService implements RegisterBook, ListBooks {
 
   private BookDetailsProvider bookDetailsProvider;
   private BookRepository bookRepository;
@@ -29,9 +29,9 @@ public class BookService implements AddBook, ListBooks {
 
   @Transactional
   @Override
-  public Optional<Book> addBook(final AddBookCommand command) {
+  public Optional<Book> registerBook(final RegisterBookCommand command) {
     var book = this.bookDetailsProvider.find(command.isbn());
-    var savedBook = book.map(Book::newBook).map(b -> this.bookRepository.save(b));
+    var savedBook = book.map(Book::cloneBook).map(b -> this.bookRepository.save(b));
     savedBook.ifPresent(
         presentBook ->
             this.bookEventPublisher.publishEvents(

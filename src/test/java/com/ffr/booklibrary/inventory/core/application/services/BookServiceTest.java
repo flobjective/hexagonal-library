@@ -2,7 +2,7 @@ package com.ffr.booklibrary.inventory.core.application.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.AddBookCommand;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.domain.model.*;
 import com.ffr.booklibrary.shared.events.BookAddedEvent;
@@ -40,7 +40,7 @@ class BookServiceTest {
     var bookService =
         new BookService(
             this.bookDetailsProvider, this.bookRepository, new FakeBookEventPublisher());
-    var addedBook = bookService.addBook(new AddBookCommand("978-0345418777"));
+    var addedBook = bookService.registerBook(new RegisterBookCommand("978-0345418777"));
     assertThat(addedBook).isNotEmpty();
     assertThat(bookRepository.getBookById(addedBook.get().id())).isNotNull();
   }
@@ -51,7 +51,7 @@ class BookServiceTest {
     var fakeBookEventPublisher = new FakeBookEventPublisher();
     var bookService =
         new BookService(this.bookDetailsProvider, this.bookRepository, fakeBookEventPublisher);
-    var addedBook = bookService.addBook(new AddBookCommand("978-0345418777"));
+    var addedBook = bookService.registerBook(new RegisterBookCommand("978-0345418777"));
     assertThat(addedBook).isNotEmpty();
     assertThat(
         fakeBookEventPublisher.containsEvent(
@@ -68,7 +68,7 @@ class BookServiceTest {
     var bookService =
         new BookService(
             this.bookDetailsProvider, this.bookRepository, new FakeBookEventPublisher());
-    var addedBook = bookService.addBook(new AddBookCommand("123"));
+    var addedBook = bookService.registerBook(new RegisterBookCommand("123"));
     assertThat(addedBook).isEmpty();
   }
 

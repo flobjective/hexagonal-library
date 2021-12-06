@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Getter
 @Accessors(fluent = true)
-public class AddBookCommand {
+public class RegisterBookCommand {
 
   private final String isbn;
 

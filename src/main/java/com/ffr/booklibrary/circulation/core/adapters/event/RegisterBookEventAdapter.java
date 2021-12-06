@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.event;
 
-import com.ffr.booklibrary.circulation.core.application.ports.incoming.AddBookToCirculation;
+import com.ffr.booklibrary.circulation.core.application.ports.incoming.RegisterBookToCirculation;
 import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
 import com.ffr.booklibrary.shared.events.BookAddedEvent;
 import io.micronaut.context.event.ApplicationEventListener;
@@ -8,18 +8,18 @@ import io.micronaut.scheduling.annotation.Async;
 import javax.inject.Singleton;
 
 @Singleton
-public class AddBookEventAdapter implements ApplicationEventListener<BookAddedEvent> {
+public class RegisterBookEventAdapter implements ApplicationEventListener<BookAddedEvent> {
 
-  private AddBookToCirculation addBookToCirculation;
+  private RegisterBookToCirculation registerBookToCirculation;
 
-  public AddBookEventAdapter(final AddBookToCirculation addBookToCirculation) {
-    this.addBookToCirculation = addBookToCirculation;
+  public RegisterBookEventAdapter(final RegisterBookToCirculation registerBookToCirculation) {
+    this.registerBookToCirculation = registerBookToCirculation;
   }
 
   @Override
   @Async
   public void onApplicationEvent(final BookAddedEvent event) {
-    addBookToCirculation.addBookToCirculation(
+    registerBookToCirculation.addBookToCirculation(
         new InventoryNumber(event.getEventPayload().inventoryNumber()));
   }
 }

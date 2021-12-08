@@ -25,7 +25,7 @@ Curl commands
 
 Add a book with an ISBN to the inventory (and circulation per event):
 ```shell
-curl -X PUT -H "Content-Type: application/json" \
+curl -X POST -H "Content-Type: application/json" \
 -d '{"isbn": "0345418778"}' \
 http://localhost:8080/book
 ```

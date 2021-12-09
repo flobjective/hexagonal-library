@@ -34,3 +34,5 @@ flyway:
 #inventory:
 #  kafka:
 #    topic: "books"
+jackson:
+  serializationInclusion: ALWAYS

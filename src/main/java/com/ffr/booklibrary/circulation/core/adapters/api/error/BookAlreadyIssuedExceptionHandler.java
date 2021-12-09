@@ -16,6 +16,6 @@ public class BookAlreadyIssuedExceptionHandler
 
   @Override
   public HttpResponse handle(HttpRequest request, BookAlreadyIssuedException exception) {
-    return HttpResponse.badRequest();
+    return HttpResponse.badRequest(exception.getMessage());
   }
 }

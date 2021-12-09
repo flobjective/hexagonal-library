@@ -16,6 +16,6 @@ public class BookNotIssuedExceptionHandler
 
   @Override
   public HttpResponse handle(HttpRequest request, BookNotIssuedException exception) {
-    return HttpResponse.badRequest();
+    return HttpResponse.badRequest(exception.getMessage());
   }
 }

@@ -11,4 +11,9 @@ import lombok.experimental.Accessors;
 public class BookId {
 
   private UUID id;
+
+  @Override
+  public String toString() {
+    return this.id.toString();
+  }
 }

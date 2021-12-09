@@ -16,6 +16,6 @@ public class BookNotFoundExceptionHandler
 
   @Override
   public HttpResponse handle(HttpRequest request, BookNotFoundException exception) {
-    return HttpResponse.notFound();
+    return HttpResponse.notFound(exception.getMessage());
   }
 }

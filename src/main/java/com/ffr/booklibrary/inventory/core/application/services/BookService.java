@@ -1,8 +1,8 @@
 package com.ffr.booklibrary.inventory.core.application.services;
 
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;

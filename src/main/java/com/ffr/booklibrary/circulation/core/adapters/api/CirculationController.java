@@ -22,6 +22,8 @@ public class CirculationController {
 
   @Inject private ReturnBook returnBook;
 
+  @Inject private ReserveBook reserveBook;
+
   @Get(value = "/available")
   public AvailableBooksResponse listAvailableBooks() {
     return AvailableBooksResponse.of(listAvailableBooks.listAvailableBooks());
@@ -45,5 +47,12 @@ public class CirculationController {
       @NotBlank @UUIDValidate String bookId, @Body @Valid ReturnBookDto returnBookDto) {
     returnBook.returnBook(
         new ReturnBookCommand(new BookId(UUID.fromString(bookId)), returnBookDto.toUserId()));
+  }
+
+  @Post(value = "/issued/{bookId}/reserve")
+  public void reserveBook(
+      @NotBlank @UUIDValidate String bookId, @Body @Valid ReserveBookDto reserveBookDto) {
+    reserveBook.reserveBook(
+        new ReserveBookCommand(new BookId(UUID.fromString(bookId)), reserveBookDto.toUserId()));
   }
 }

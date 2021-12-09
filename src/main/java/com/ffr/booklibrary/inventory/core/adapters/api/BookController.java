@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.inventory.core.adapters.api;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;

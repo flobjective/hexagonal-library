@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.inventory.core.adapters.api;
 
-import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.Isbn;
+import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;

@@ -60,12 +60,23 @@ curl "http://localhost:8080/circulation/issued?userId=3bfc01e8-b586-453c-923d-77
 #### Returning a book from a reader
 
 Returning a book from a reader using a bookId (e.g. `cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f`) and userId (
-`3bfc01e8-b586-453c-923d-7776bfa39273` - this user always exists)
+`3bfc01e8-b586-453c-923d-7776bfa39273`)
 
 ```shell
 curl -X POST -H "Content-Type: application/json" \
 -d '{"userId": "3bfc01e8-b586-453c-923d-7776bfa39273"}' \
 http://localhost:8080/circulation/issued/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/return
+```
+
+#### Reserving a book to a reader
+
+Reserving a book for a reader using a bookId (e.g. `cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f`) and userId (
+`3bfc01e8-b586-453c-923d-7776bfa39273` - should be a different user)
+
+```shell
+curl -X POST -H "Content-Type: application/json" \
+-d '{"userId": "1bfc01e8-b586-453c-923d-7776bfa39273"}' \
+http://localhost:8080/circulation/issued/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/reserve
 ```
 
 

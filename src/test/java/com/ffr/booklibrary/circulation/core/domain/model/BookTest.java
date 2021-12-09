@@ -102,7 +102,18 @@ class BookTest {
   }
 
   @Test
-  void reserveToUser_fails_same_user() {
+  void reserveToUser_fails_already_reserved() {
+    Book book = createBook();
+    UserId userId = new UserId(UUID.randomUUID());
+    book.issueToUser(userId);
+    book.reserveToUser(new UserId(UUID.randomUUID()));
+
+    assertThrows(
+        BookIsReservedException.class, () -> book.reserveToUser(new UserId(UUID.randomUUID())));
+  }
+
+  @Test
+  void reserveToUser_fails_already_issued() {
     Book book = createBook();
     UserId userId = new UserId(UUID.randomUUID());
     book.issueToUser(userId);

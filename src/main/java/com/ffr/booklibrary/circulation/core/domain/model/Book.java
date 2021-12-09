@@ -60,6 +60,9 @@ public class Book extends BaseEntity {
     } else if (isIssuedTo(userId)) {
       throw new BookAlreadyIssuedToUserException();
     } else {
+      if (this.currentReservation != null && !this.currentReservation.isReservedBy(userId)) {
+        throw new BookIsReservedException();
+      }
       this.currentReservation = BookReservation.create(this.clock, userId);
     }
     return this.currentReservation;

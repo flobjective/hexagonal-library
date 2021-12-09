@@ -14,7 +14,12 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CirculationService
-    implements RegisterBookToCirculation, IssueBook, ReturnBook, ListIssuedBooks, ListAvailableBooks {
+    implements RegisterBookToCirculation,
+        IssueBook,
+        ReturnBook,
+        ListIssuedBooks,
+        ListAvailableBooks,
+        ReserveBook {
 
   private final Clock clock;
   private final BookRepository bookRepository;
@@ -67,5 +72,15 @@ public class CirculationService
   @Override
   public List<AvailableBookReadModel> listAvailableBooks() {
     return this.bookRepository.listAvailableBooks();
+  }
+
+  @Override
+  public void reserveBook(final ReserveBookCommand reserveBookCommand) {
+    Book book =
+        this.bookRepository
+            .find(reserveBookCommand.bookId())
+            .orElseThrow(() -> new BookNotFoundException(reserveBookCommand.bookId()));
+    book.reserveToUser(reserveBookCommand.userId());
+    this.bookRepository.save(book);
   }
 }

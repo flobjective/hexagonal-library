@@ -30,7 +30,9 @@ public class BookJpaRepositoryAdapter implements BookRepository {
   @Override
   public Book save(final Book book) {
     var existing = bookJpaRepository.findById(book.id()).orElseThrow();
-    existing.setCurrentIssue(JpaBook.from(book).getCurrentIssue());
+    var jpaBook = JpaBook.from(book);
+    existing.setCurrentIssue(jpaBook.getCurrentIssue());
+    existing.setCurrentReservation(jpaBook.getCurrentReservation());
     return bookJpaRepository.update(existing).toBook();
   }
 

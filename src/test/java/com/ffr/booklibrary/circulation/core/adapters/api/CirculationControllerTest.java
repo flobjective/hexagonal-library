@@ -122,4 +122,31 @@ class CirculationControllerTest {
 
     assertThat(response).extracting(HttpResponse::getStatus).isEqualTo(HttpStatus.OK);
   }
+
+  @Test
+  void reserveBook_success() {
+    var book =
+        bookRepository.insert(
+            Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
+
+    var john = userRepository.insert(User.create("John Doe"));
+    var jayne = userRepository.insert(User.create("Jayne Doe"));
+    client
+        .toBlocking()
+        .exchange(
+            HttpRequest.POST(
+                "/available/" + book.id().toString() + "/issue",
+                new IssueBookToUserDto(john.id().toString())));
+
+    HttpResponse<String> response =
+        client
+            .toBlocking()
+            .exchange(
+                HttpRequest.POST(
+                    "/issued/" + book.id().toString() + "/reserve",
+                    new ReturnBookDto(jayne.id().toString())),
+                String.class);
+
+    assertThat(response).extracting(HttpResponse::getStatus).isEqualTo(HttpStatus.OK);
+  }
 }

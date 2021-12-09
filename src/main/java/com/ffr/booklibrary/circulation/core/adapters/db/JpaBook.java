@@ -25,14 +25,21 @@ public class JpaBook {
   private String inventoryNumber;
 
   @OneToOne(cascade = {CascadeType.ALL})
-  @JoinColumn(name = "current_book_id")
+  @JoinColumn(name = "current_book_issue_id")
   private JpaBookIssue currentIssue;
+
+  @OneToOne(cascade = {CascadeType.ALL})
+  @JoinColumn(name = "current_book_reservation_id")
+  private JpaBookReservation currentReservation;
 
   public static JpaBook from(final Book book) {
     return new JpaBook(
         book.id(),
         book.inventoryNumber().toString(),
-        book.currentBookIssue() == null ? null : JpaBookIssue.from(book.currentBookIssue()));
+        book.currentBookIssue() == null ? null : JpaBookIssue.from(book.currentBookIssue()),
+        book.currentReservation() == null
+            ? null
+            : JpaBookReservation.from(book.currentReservation()));
   }
 
   public Book toBook() {
@@ -41,6 +48,8 @@ public class JpaBook {
         .clock(Clock.systemUTC())
         .inventoryNumber(new InventoryNumber(this.inventoryNumber))
         .currentBookIssue(currentIssue != null ? currentIssue.toBookIssue() : null)
+        .currentReservation(
+            currentReservation != null ? currentReservation.toBookReservation() : null)
         .build();
   }
 

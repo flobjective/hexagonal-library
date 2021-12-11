@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
-import com.ffr.booklibrary.shared.events.BookAddedEvent;
+import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -37,11 +37,11 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
         .map(
             (jpaEvent -> {
               switch (jpaEvent.eventName()) {
-                case BookAddedEvent.EVENT_NAME:
+                case BookRegistrationCompleted.EVENT_NAME:
                   var eventPayload =
                       mapper.convertValue(
-                          jpaEvent.eventPayload(), BookAddedEvent.BookAddedPayload.class);
-                  return new BookAddedEvent(jpaEvent.id(), jpaEvent.publishedDate(), eventPayload);
+                          jpaEvent.eventPayload(), BookRegistrationCompleted.BookAddedPayload.class);
+                  return new BookRegistrationCompleted(jpaEvent.id(), jpaEvent.publishedDate(), eventPayload);
                 default:
                   return null;
               }

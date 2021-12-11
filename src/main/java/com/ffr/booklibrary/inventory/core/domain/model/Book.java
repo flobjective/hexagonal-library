@@ -17,7 +17,7 @@ public class Book extends BaseEntity {
 
   private final BookIdentification bookIdentification;
 
-  public static Book cloneBook(final Book book) {
+  public static Book createBook(final Book book) {
     return book.toBuilder().id(UUID.randomUUID()).inventoryNumber(InventoryNumber.create()).build();
   }
 }

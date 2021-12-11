@@ -207,6 +207,7 @@
           <compilerArgs>
             <arg>-Amicronaut.processing.group=com.ffr</arg>
             <arg>-Amicronaut.processing.module=hexagonal</arg>
+            <arg>-Amicronaut.openapi.views.spec=rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop</arg>
           </compilerArgs>
         </configuration>
       </plugin>

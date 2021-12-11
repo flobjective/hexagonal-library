@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayload> {
+public class BookRegistrationCompleted extends BaseDomainEvent<BookRegistrationCompleted.BookAddedPayload> {
 
   public static final String EVENT_NAME = "BookAddedEvent";
 
   private BookAddedPayload payload;
 
-  public BookAddedEvent(
+  public BookRegistrationCompleted(
       final UUID eventId,
       final Instant publishedDate,
       final UUID bookId,
@@ -24,13 +24,13 @@ public class BookAddedEvent extends BaseDomainEvent<BookAddedEvent.BookAddedPayl
     this.payload = new BookAddedPayload(bookId, inventoryNumber);
   }
 
-  public BookAddedEvent(final UUID eventId, final Instant publishedDate, BookAddedPayload payload) {
+  public BookRegistrationCompleted(final UUID eventId, final Instant publishedDate, BookAddedPayload payload) {
     super(EVENT_NAME, eventId, publishedDate);
     this.payload = payload;
   }
 
-  public static BookAddedEvent create(final UUID bookId, final String inventoryNumber) {
-    return new BookAddedEvent(UUID.randomUUID(), null, bookId, inventoryNumber);
+  public static BookRegistrationCompleted create(final UUID bookId, final String inventoryNumber) {
+    return new BookRegistrationCompleted(UUID.randomUUID(), null, bookId, inventoryNumber);
   }
 
   @Override

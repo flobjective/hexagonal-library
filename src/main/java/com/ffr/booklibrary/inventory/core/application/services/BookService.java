@@ -7,7 +7,7 @@ import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetails
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
-import com.ffr.booklibrary.shared.events.BookAddedEvent;
+import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -31,12 +31,12 @@ public class BookService implements RegisterBook, ListBooks {
   @Override
   public Optional<Book> registerBook(final RegisterBookCommand command) {
     var book = this.bookDetailsProvider.find(command.isbn());
-    var savedBook = book.map(Book::cloneBook).map(b -> this.bookRepository.save(b));
+    var savedBook = book.map(Book::createBook).map(b -> this.bookRepository.save(b));
     savedBook.ifPresent(
         presentBook ->
             this.bookEventPublisher.publishEvents(
                 List.of(
-                    BookAddedEvent.create(
+                    BookRegistrationCompleted.create(
                         presentBook.id(), presentBook.inventoryNumber().toString()))));
     return savedBook;
   }

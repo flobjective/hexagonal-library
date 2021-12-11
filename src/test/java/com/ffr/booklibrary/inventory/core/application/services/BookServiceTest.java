@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.domain.model.*;
-import com.ffr.booklibrary.shared.events.BookAddedEvent;
+import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,8 +56,8 @@ class BookServiceTest {
     assertThat(
         fakeBookEventPublisher.containsEvent(
             (event) ->
-                event instanceof BookAddedEvent
-                    && ((BookAddedEvent.BookAddedPayload) event.getEventPayload())
+                event instanceof BookRegistrationCompleted
+                    && ((BookRegistrationCompleted.BookAddedPayload) event.getEventPayload())
                         .bookId()
                         .equals(addedBook.get().id())));
   }

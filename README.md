@@ -2,7 +2,7 @@ Experimental app for exploring DDD tactical patterns and more...
 
 ## Overview
 
-Hexagonal architecture consisting of currently two modules:
+An application consisting of currently two modules:
 
 - Inventory
 - Circulation
@@ -14,7 +14,7 @@ See miro board: https://miro.com/app/board/o9J_lB2j3Ac=/?invite_link_id=71837874
 Start the setup with
 
 ```shell
-docker-compose up // dependencies
+docker-compose up // start dependencies
 ./mvnw mn:run // start the micronaut app
 ```
 

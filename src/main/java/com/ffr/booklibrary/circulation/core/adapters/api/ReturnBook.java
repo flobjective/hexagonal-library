@@ -10,8 +10,7 @@ import lombok.Data;
 @Data
 @Introspected
 @AllArgsConstructor
-public class ReserveBookDto {
-
+public class ReturnBook {
   @NotEmpty @UUIDValidate private String userId;
 
   public UserId toUserId() {

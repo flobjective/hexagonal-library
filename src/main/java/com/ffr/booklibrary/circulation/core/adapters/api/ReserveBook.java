@@ -2,19 +2,19 @@ package com.ffr.booklibrary.circulation.core.adapters.api;
 
 import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.data.annotation.Transient;
 import java.util.UUID;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Introspected
 @Data
-public class IssueBookToUserDto {
+@Introspected
+@AllArgsConstructor
+public class ReserveBook {
 
-  @NotNull @UUIDValidate private final String userId;
+  @NotEmpty @UUIDValidate private String userId;
 
-  @Transient
-  UserId toUserId() {
+  public UserId toUserId() {
     return new UserId(UUID.fromString(this.userId));
   }
 }

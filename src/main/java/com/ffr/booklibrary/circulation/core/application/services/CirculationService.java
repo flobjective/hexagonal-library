@@ -19,7 +19,8 @@ public class CirculationService
         ReturnBook,
         ListIssuedBooks,
         ListAvailableBooks,
-        ReserveBook {
+        ReserveBook,
+        GetAvailableBook {
 
   private final Clock clock;
   private final BookRepository bookRepository;
@@ -82,5 +83,12 @@ public class CirculationService
             .orElseThrow(() -> new BookNotFoundException(reserveBookCommand.bookId()));
     book.reserveToUser(reserveBookCommand.userId());
     this.bookRepository.save(book);
+  }
+
+  @Override
+  public AvailableBookReadModel getAvailableBook(final BookId bookId) {
+    return this.bookRepository
+            .readAvailableBook(bookId)
+            .orElseThrow(() -> new BookNotFoundException(bookId));
   }
 }

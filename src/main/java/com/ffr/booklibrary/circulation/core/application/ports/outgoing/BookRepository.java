@@ -17,4 +17,6 @@ public interface BookRepository {
   List<Book> findBooksWithExpiredReservations(Clock clock);
 
   List<AvailableBookReadModel> listAvailableBooks();
+
+  Optional<AvailableBookReadModel> readAvailableBook(BookId bookId);
 }

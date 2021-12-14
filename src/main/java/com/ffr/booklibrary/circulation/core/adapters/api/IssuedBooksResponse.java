@@ -10,10 +10,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class IssuedBooksResponse {
 
-  private List<IssuedBookDto> issuedBooks;
+  private List<IssuedBook> issuedBooks;
 
   public static IssuedBooksResponse of(final List<BookReadModel> books) {
     return new IssuedBooksResponse(
-        books.stream().map(IssuedBookDto::of).collect(Collectors.toList()));
+        books.stream().map(IssuedBook::of).collect(Collectors.toList()));
   }
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface BookJpaRepository extends CrudRepository<JpaBook, UUID> {
-  @Query("FROM JpaBook b WHERE b.bookId = :id")
+  @Query("FROM JpaBook b WHERE b.id = :id")
   Optional<JpaBook> findByBookId(UUID id);
 
   @Query("FROM JpaBook b WHERE b.currentIssue is not null AND b.currentIssue.userId = :id")

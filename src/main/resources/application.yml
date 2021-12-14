@@ -9,6 +9,11 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+      default:
+        paths:
+          - classpath:public
+        mapping: /static/**
+        enabled: true
 datasources:
   default:
     schema: library

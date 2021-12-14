@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Introspected
 @Data
-public class IssuedToUserIdDto {
+public class IssuedToUserId {
 
   @NotEmpty @UUIDValidate private String userId;
 

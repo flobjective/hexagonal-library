@@ -10,11 +10,11 @@ import lombok.Data;
 @Builder
 public class ListBookResponse {
 
-  private List<BookListDto> books;
+  private List<BookList> books;
 
   public static ListBookResponse of(final List<Book> listBooks) {
     return ListBookResponse.builder()
-        .books(listBooks.stream().map(BookListDto::of).collect(Collectors.toList()))
+        .books(listBooks.stream().map(BookList::of).collect(Collectors.toList()))
         .build();
   }
 }

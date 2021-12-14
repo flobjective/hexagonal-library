@@ -7,13 +7,13 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class IssuedBookDto {
+public class IssuedBook {
 
   private String bookId;
 
   private Instant expirationDate;
 
-  public static IssuedBookDto of(final BookReadModel book) {
-    return new IssuedBookDto(book.bookId().toString(), book.expirationDate());
+  public static IssuedBook of(final BookReadModel book) {
+    return new IssuedBook(book.bookId().toString(), book.expirationDate());
   }
 }

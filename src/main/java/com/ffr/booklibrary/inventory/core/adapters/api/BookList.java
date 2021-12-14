@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BookListDto {
+public class BookList {
 
   private String id;
 
@@ -16,8 +16,8 @@ public class BookListDto {
 
   private String title;
 
-  public static BookListDto of(final Book book) {
-    return BookListDto.builder()
+  public static BookList of(final Book book) {
+    return BookList.builder()
         .id(book.id().toString())
         .title(book.title().title())
         .isbn10(book.bookIdentification().isbn10().value())

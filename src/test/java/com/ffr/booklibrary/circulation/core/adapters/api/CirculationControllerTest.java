@@ -18,7 +18,10 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.time.Clock;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 import javax.inject.Inject;
+
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest(transactional = false)
@@ -44,8 +47,9 @@ class CirculationControllerTest {
 
   @Test
   void listAvailableBooks_someBooks() {
-    bookRepository.insert(
-        Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
+    var book =
+        bookRepository.insert(
+            Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     HttpResponse<AvailableBooksResponse> response =
         client.toBlocking().exchange(HttpRequest.GET("/available"), AvailableBooksResponse.class);
@@ -54,8 +58,12 @@ class CirculationControllerTest {
         .isNotNull()
         .extracting(HttpResponse::body)
         .extracting(AvailableBooksResponse::getAvailableBooks)
-        .extracting(List::size)
-        .isEqualTo(1);
+        .has(
+            new Condition<>(
+                (books) ->
+                    books.stream()
+                        .anyMatch((b) -> b.getBookId().equalsIgnoreCase(book.id().toString())),
+                ""));
   }
 
   @Test
@@ -72,7 +80,7 @@ class CirculationControllerTest {
             .exchange(
                 HttpRequest.POST(
                     "/available/" + book.id().toString() + "/issue",
-                    new IssueBookToUserDto(user.id().toString())),
+                    new IssueBookToUser(user.id().toString())),
                 String.class);
 
     assertThat(response).isNotNull();
@@ -91,7 +99,7 @@ class CirculationControllerTest {
                     .exchange(
                         HttpRequest.POST(
                             "/available/" + UUID.randomUUID() + "/issue",
-                            new IssueBookToUserDto(user.id().toString())),
+                            new IssueBookToUser(user.id().toString())),
                         String.class));
 
     assertThat(exc.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -109,7 +117,7 @@ class CirculationControllerTest {
         .exchange(
             HttpRequest.POST(
                 "/available/" + book.id().toString() + "/issue",
-                new IssueBookToUserDto(user.id().toString())));
+                new IssueBookToUser(user.id().toString())));
 
     HttpResponse<String> response =
         client
@@ -117,7 +125,7 @@ class CirculationControllerTest {
             .exchange(
                 HttpRequest.POST(
                     "/issued/" + book.id().toString() + "/return",
-                    new ReturnBookDto(user.id().toString())),
+                    new ReturnBook(user.id().toString())),
                 String.class);
 
     assertThat(response).extracting(HttpResponse::getStatus).isEqualTo(HttpStatus.OK);
@@ -136,7 +144,7 @@ class CirculationControllerTest {
         .exchange(
             HttpRequest.POST(
                 "/available/" + book.id().toString() + "/issue",
-                new IssueBookToUserDto(john.id().toString())));
+                new IssueBookToUser(john.id().toString())));
 
     HttpResponse<String> response =
         client
@@ -144,9 +152,36 @@ class CirculationControllerTest {
             .exchange(
                 HttpRequest.POST(
                     "/issued/" + book.id().toString() + "/reserve",
-                    new ReturnBookDto(jayne.id().toString())),
+                    new ReturnBook(jayne.id().toString())),
                 String.class);
 
     assertThat(response).extracting(HttpResponse::getStatus).isEqualTo(HttpStatus.OK);
+  }
+
+  @Test
+  void getAvailableBook_noBook() {
+    var exc =
+        assertThrows(
+            HttpClientResponseException.class,
+            () -> client.toBlocking().exchange(HttpRequest.GET("/available/" + UUID.randomUUID())));
+
+    assertThat(exc.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
+
+  @Test
+  void getAvailableBook_success() {
+    var book =
+        bookRepository.insert(
+            Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
+
+    HttpResponse<AvailableBook> response =
+        client
+            .toBlocking()
+            .exchange(HttpRequest.GET("/available/" + book.id()), AvailableBook.class);
+
+    assertThat(response)
+        .isNotNull()
+        .extracting(HttpResponse::body)
+        .hasFieldOrPropertyWithValue("bookId", book.id().toString());
   }
 }

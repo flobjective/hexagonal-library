@@ -54,4 +54,9 @@ public class BookJpaRepositoryAdapter implements BookRepository {
         .map(JpaBook::toAvailableReadModel)
         .collect(Collectors.toList());
   }
+
+  @Override
+  public Optional<AvailableBookReadModel> readAvailableBook(BookId bookId) {
+    return this.bookJpaRepository.findByBookId(bookId.id()).map(JpaBook::toAvailableReadModel);
+  }
 }

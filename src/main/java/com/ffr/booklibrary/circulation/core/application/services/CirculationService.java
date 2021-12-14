@@ -6,11 +6,11 @@ import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepos
 import com.ffr.booklibrary.circulation.core.domain.model.*;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookNotFoundException;
 import io.micronaut.context.event.ApplicationEventPublisher;
-import io.micronaut.scheduling.annotation.Scheduled;
+import lombok.AllArgsConstructor;
+
+import javax.transaction.Transactional;
 import java.time.Clock;
 import java.util.List;
-import javax.transaction.Transactional;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CirculationService
@@ -62,8 +62,7 @@ public class CirculationService
     this.bookRepository.insert(newBook);
   }
 
-  @Scheduled(initialDelay = "20s", fixedDelay = "10s")
-  private void expireReservations() {
+  public void expireReservations() {
     var books = this.bookRepository.findBooksWithExpiredReservations(this.clock);
     books.stream()
         .filter(book -> book.currentReservation().hasExpired(this.clock))

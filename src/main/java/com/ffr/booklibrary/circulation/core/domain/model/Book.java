@@ -3,6 +3,8 @@ package com.ffr.booklibrary.circulation.core.domain.model;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.*;
 import java.time.Clock;
 import java.time.Duration;
+
+import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;

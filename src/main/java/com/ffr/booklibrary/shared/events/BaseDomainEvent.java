@@ -1,18 +1,16 @@
 package com.ffr.booklibrary.shared.events;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.Instant;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
+import java.time.Instant;
+import java.util.UUID;
+
 @AllArgsConstructor
 @Getter
 @Accessors(fluent = true)
-public abstract class BaseDomainEvent<T> {
-
-  @JsonProperty protected String eventName;
+public abstract class BaseDomainEvent {
 
   protected UUID eventId;
 
@@ -22,5 +20,4 @@ public abstract class BaseDomainEvent<T> {
     this.publishedDate = Instant.now();
   }
 
-  public abstract T getEventPayload();
 }

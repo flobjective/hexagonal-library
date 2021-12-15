@@ -20,6 +20,6 @@ public class RegisterBookEventAdapter implements ApplicationEventListener<BookRe
   @Async
   public void onApplicationEvent(final BookRegistrationCompleted event) {
     registerBookToCirculation.addBookToCirculation(
-        new InventoryNumber(event.getEventPayload().inventoryNumber()));
+        new InventoryNumber(event.inventoryNumber()));
   }
 }

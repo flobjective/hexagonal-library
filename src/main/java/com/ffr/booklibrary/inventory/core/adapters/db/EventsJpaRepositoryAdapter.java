@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.inject.Singleton;
@@ -19,13 +22,14 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
 
   @Override
   public void save(final BaseDomainEvent event) {
-    JsonNode node = new ObjectMapper().convertValue(event.getEventPayload(), JsonNode.class);
+    JsonNode node = new ObjectMapper().convertValue(event, JsonNode.class);
+    String eventName = event.getClass().getSimpleName();
     if (eventsJpaRepository.existsById(event.eventId())) {
       eventsJpaRepository.update(
-          JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
+          JpaEvent.of(event.eventId(), eventName, event.publishedDate(), node));
     } else {
       eventsJpaRepository.save(
-          JpaEvent.of(event.eventId(), event.eventName(), event.publishedDate(), node));
+          JpaEvent.of(event.eventId(), eventName, event.publishedDate(), node));
     }
   }
 
@@ -33,15 +37,18 @@ public class EventsJpaRepositoryAdapter implements EventsRepository {
   public List<BaseDomainEvent> findAllUnpublished() {
     var mapper = new ObjectMapper();
     var unpublishedEvents = eventsJpaRepository.findAllUnpublished();
-    return StreamSupport.stream(unpublishedEvents.spliterator(), false)
+    return unpublishedEvents.stream()
         .map(
             (jpaEvent -> {
               switch (jpaEvent.eventName()) {
-                case BookRegistrationCompleted.EVENT_NAME:
-                  var eventPayload =
-                      mapper.convertValue(
-                          jpaEvent.eventPayload(), BookRegistrationCompleted.BookAddedPayload.class);
-                  return new BookRegistrationCompleted(jpaEvent.id(), jpaEvent.publishedDate(), eventPayload);
+                case "BookRegistrationCompleted":
+                  var bookRegistrationCompletedEvent =
+                      mapper.convertValue(jpaEvent.eventPayload(), BookRegistrationCompleted.class);
+                  return new BookRegistrationCompleted(
+                      jpaEvent.id(),
+                      jpaEvent.publishedDate(),
+                      bookRegistrationCompletedEvent.bookId(),
+                      bookRegistrationCompletedEvent.inventoryNumber());
                 default:
                   return null;
               }

@@ -57,9 +57,7 @@ class BookServiceTest {
         fakeBookEventPublisher.containsEvent(
             (event) ->
                 event instanceof BookRegistrationCompleted
-                    && ((BookRegistrationCompleted.BookAddedPayload) event.getEventPayload())
-                        .bookId()
-                        .equals(addedBook.get().id())));
+                    && ((BookRegistrationCompleted) event).bookId().equals(addedBook.get().id())));
   }
 
   @Test

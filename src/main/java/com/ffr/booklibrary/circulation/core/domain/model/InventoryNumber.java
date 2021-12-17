@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class InventoryNumber {
 
-  private UUID inventoryId;
+  private final UUID inventoryId;
 
   public InventoryNumber(final String string) {
     this.inventoryId = UUID.fromString(string);

@@ -37,7 +37,7 @@ http://localhost:8080/book
 This command will list all books that are currently available (e.g. not already issued to another reader).
 
 ```shell
-curl http://localhost:8080/circulation/available
+curl http://localhost:8080/circulation/books/available
 ```
 
 #### Issuing a book to a reader
@@ -48,13 +48,13 @@ Issuing a book to a reader using a bookId (e.g. `cd3b56c8-a8bd-4727-8b6d-9d1a164
 ```shell
 curl -X POST -H "Content-Type: application/json" \
 -d '{"userId": "3bfc01e8-b586-453c-923d-7776bfa39273"}' \
-http://localhost:8080/circulation/available/cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f/issue 
+http://localhost:8080/circulation/books/available/cd3b56c8-a8bd-4727-8b6d-9d1a1649ea5f/issue 
 ```
 
 #### Listing issued books for a specific reader
 
 ```shell
-curl "http://localhost:8080/circulation/issued?userId=3bfc01e8-b586-453c-923d-7776bfa39273"
+curl "http://localhost:8080/circulation/books/issued?userId=3bfc01e8-b586-453c-923d-7776bfa39273"
 ```
 
 #### Returning a book from a reader
@@ -65,7 +65,7 @@ Returning a book from a reader using a bookId (e.g. `cd3b56c8-a8bd-4727-8b6d-9d1
 ```shell
 curl -X POST -H "Content-Type: application/json" \
 -d '{"userId": "3bfc01e8-b586-453c-923d-7776bfa39273"}' \
-http://localhost:8080/circulation/issued/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/return
+http://localhost:8080/circulation/books/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/return
 ```
 
 #### Reserving a book to a reader
@@ -76,7 +76,7 @@ Reserving a book for a reader using a bookId (e.g. `cd3b56c8-a8bd-4727-8b6d-9d1a
 ```shell
 curl -X POST -H "Content-Type: application/json" \
 -d '{"userId": "1bfc01e8-b586-453c-923d-7776bfa39273"}' \
-http://localhost:8080/circulation/issued/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/reserve
+http://localhost:8080/circulation/books/8db8f948-ada8-48b6-9a1d-ff3810bf6de7/reserve
 ```
 
 

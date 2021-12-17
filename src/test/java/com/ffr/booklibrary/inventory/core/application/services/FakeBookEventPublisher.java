@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public class FakeBookEventPublisher implements BookEventPublisher {
 
-  private List<BaseDomainEvent> publishedEvents = new ArrayList<>();
+  private final List<BaseDomainEvent> publishedEvents = new ArrayList<>();
 
   @Override
   public void publishEvents(List<BaseDomainEvent> events) {

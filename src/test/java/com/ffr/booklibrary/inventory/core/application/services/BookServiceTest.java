@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class BookServiceTest {
 
-  private Book mostlyHarmless =
+  private final Book mostlyHarmless =
       Book.builder()
           .title(new BookTitle("Mostly harmless"))
           .inventoryNumber(InventoryNumber.create())
@@ -23,7 +23,7 @@ class BookServiceTest {
                   .isbn13(new Isbn13("978-0345418777"))
                   .build())
           .build();
-  private List<Book> books = List.of(mostlyHarmless);
+  private final List<Book> books = List.of(mostlyHarmless);
 
   private BookDetailsProvider bookDetailsProvider;
   private InMemoryInventoryRepository bookRepository;
@@ -54,10 +54,13 @@ class BookServiceTest {
     var addedBook = bookService.registerBook(new RegisterBookCommand("978-0345418777"));
     assertThat(addedBook).isNotEmpty();
     assertThat(
-        fakeBookEventPublisher.containsEvent(
-            (event) ->
-                event instanceof BookRegistrationCompleted
-                    && ((BookRegistrationCompleted) event).bookId().equals(addedBook.get().id())));
+            fakeBookEventPublisher.containsEvent(
+                (event) ->
+                    event instanceof BookRegistrationCompleted
+                        && ((BookRegistrationCompleted) event)
+                            .bookId()
+                            .equals(addedBook.get().id())))
+        .isTrue();
   }
 
   @Test

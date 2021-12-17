@@ -5,12 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.shared.events.BaseDomainEvent;
 import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import javax.inject.Singleton;
 import lombok.AllArgsConstructor;
 

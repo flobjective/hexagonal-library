@@ -22,42 +22,43 @@ public class CirculationController {
 
   @Inject private IssueBook issueBook;
 
-  @Inject private com.ffr.booklibrary.circulation.core.application.ports.incoming.ReturnBook returnBook;
+  @Inject
+  private com.ffr.booklibrary.circulation.core.application.ports.incoming.ReturnBook returnBook;
 
-  @Inject private com.ffr.booklibrary.circulation.core.application.ports.incoming.ReserveBook reserveBook;
+  @Inject
+  private com.ffr.booklibrary.circulation.core.application.ports.incoming.ReserveBook reserveBook;
 
-  @Get(value = "/available")
+  @Get(value = "/books/available")
   public AvailableBooksResponse listAvailableBooks() {
     return AvailableBooksResponse.of(listAvailableBooks.listAvailableBooks());
   }
 
-  @Get(value = "/available/{bookId}")
-  public AvailableBook getAvailableBook(@QueryValue @NotBlank @UUIDValidate String bookId) {
-    return AvailableBook.of(
-        getAvailableBook.getAvailableBook(new BookId(UUID.fromString(bookId))));
+  @Get(value = "/books/{bookId}")
+  public Book getAvailableBook(@QueryValue @NotBlank @UUIDValidate String bookId) {
+    return Book.of(getAvailableBook.getAvailableBook(new BookId(UUID.fromString(bookId))));
   }
 
-  @Get(value = "/issued")
+  @Get(value = "/books/issued")
   public IssuedBooksResponse listIssuedBooks(@QueryValue @NotBlank @UUIDValidate String userId) {
     return IssuedBooksResponse.of(
         listIssuedBooks.listIssuedBooks(new UserId(UUID.fromString(userId))));
   }
 
-  @Post(value = "/available/{bookId}/issue")
+  @Post(value = "/books/{bookId}/issue")
   public void issueToUser(
-          @Body @Valid IssueBookToUser issueToUserDto, @NotBlank @UUIDValidate String bookId) {
+      @Body @Valid IssueBookToUser issueToUserDto, @NotBlank @UUIDValidate String bookId) {
     issueBook.issueBook(
         new IssueBookCommand(new BookId(UUID.fromString(bookId)), issueToUserDto.toUserId()));
   }
 
-  @Post(value = "/issued/{bookId}/return")
+  @Post(value = "/books/{bookId}/return")
   public void returnBook(
       @NotBlank @UUIDValidate String bookId, @Body @Valid ReturnBook returnBook) {
     this.returnBook.returnBook(
         new ReturnBookCommand(new BookId(UUID.fromString(bookId)), returnBook.toUserId()));
   }
 
-  @Post(value = "/issued/{bookId}/reserve")
+  @Post(value = "/books/{bookId}/reserve")
   public void reserveBook(
       @NotBlank @UUIDValidate String bookId, @Body @Valid ReserveBook reserveBook) {
     this.reserveBook.reserveBook(

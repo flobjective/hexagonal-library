@@ -1,11 +1,10 @@
 package com.ffr.booklibrary.shared.events;
 
+import java.time.Instant;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-
-import java.time.Instant;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
@@ -19,5 +18,4 @@ public abstract class BaseDomainEvent {
   public void markPublished() {
     this.publishedDate = Instant.now();
   }
-
 }

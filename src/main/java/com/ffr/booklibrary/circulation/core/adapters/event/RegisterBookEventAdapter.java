@@ -8,9 +8,10 @@ import io.micronaut.scheduling.annotation.Async;
 import javax.inject.Singleton;
 
 @Singleton
-public class RegisterBookEventAdapter implements ApplicationEventListener<BookRegistrationCompleted> {
+public class RegisterBookEventAdapter
+    implements ApplicationEventListener<BookRegistrationCompleted> {
 
-  private RegisterBookToCirculation registerBookToCirculation;
+  private final RegisterBookToCirculation registerBookToCirculation;
 
   public RegisterBookEventAdapter(final RegisterBookToCirculation registerBookToCirculation) {
     this.registerBookToCirculation = registerBookToCirculation;
@@ -19,7 +20,6 @@ public class RegisterBookEventAdapter implements ApplicationEventListener<BookRe
   @Override
   @Async
   public void onApplicationEvent(final BookRegistrationCompleted event) {
-    registerBookToCirculation.addBookToCirculation(
-        new InventoryNumber(event.inventoryNumber()));
+    registerBookToCirculation.addBookToCirculation(new InventoryNumber(event.inventoryNumber()));
   }
 }

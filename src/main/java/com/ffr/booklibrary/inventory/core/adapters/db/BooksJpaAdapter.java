@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 @Singleton
 public class BooksJpaAdapter implements Books {
 
-  private BookJpaRepository bookJpaRepository;
+  private final BookJpaRepository bookJpaRepository;
 
   public BooksJpaAdapter(final BookJpaRepository bookJpaRepository) {
     this.bookJpaRepository = bookJpaRepository;

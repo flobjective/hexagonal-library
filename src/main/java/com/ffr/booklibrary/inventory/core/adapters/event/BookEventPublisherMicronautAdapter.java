@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 @Singleton
 public class BookEventPublisherMicronautAdapter implements BookEventPublisher {
 
-  @Inject private ApplicationEventPublisher eventPublisher;
+  @Inject private final ApplicationEventPublisher eventPublisher;
 
   public BookEventPublisherMicronautAdapter(final ApplicationEventPublisher eventPublisher) {
     this.eventPublisher = eventPublisher;

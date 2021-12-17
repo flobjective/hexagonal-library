@@ -1,17 +1,16 @@
 package com.ffr.booklibrary.shared.events;
 
-import lombok.Getter;
-import lombok.experimental.Accessors;
-
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
 public class BookRegistrationCompleted extends BaseDomainEvent {
 
-  private UUID bookId;
-  private String inventoryNumber;
+  private final UUID bookId;
+  private final String inventoryNumber;
 
   public BookRegistrationCompleted(
       final UUID eventId,

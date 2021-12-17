@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class InventoryNumber {
 
-  private UUID inventoryId;
+  private final UUID inventoryId;
 
   private InventoryNumber() {
     this.inventoryId = UUID.randomUUID();

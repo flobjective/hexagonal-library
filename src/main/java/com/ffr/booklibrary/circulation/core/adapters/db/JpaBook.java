@@ -52,13 +52,4 @@ public class JpaBook {
             currentReservation != null ? currentReservation.toBookReservation() : null)
         .build();
   }
-
-  public BookReadModel toReadModel() {
-    return new BookReadModel(new BookId(this.id), this.currentIssue.getExpirationTime());
-  }
-
-  public AvailableBookReadModel toAvailableReadModel() {
-    return new AvailableBookReadModel(
-        new BookId(this.id), new InventoryNumber(this.inventoryNumber));
-  }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class FakeBookDetailsProvider implements BookDetailsProvider {
 
-  private HashMap<String, Book> books = new HashMap<>();
+  private final HashMap<String, Book> books = new HashMap<>();
 
   public FakeBookDetailsProvider(final Collection<Book> books) {
     this.books.putAll(

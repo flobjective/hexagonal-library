@@ -14,9 +14,9 @@ import javax.transaction.Transactional;
 
 public class BookService implements RegisterBook, ListBooks {
 
-  private BookDetailsProvider bookDetailsProvider;
-  private Books books;
-  private BookEventPublisher bookEventPublisher;
+  private final BookDetailsProvider bookDetailsProvider;
+  private final Books books;
+  private final BookEventPublisher bookEventPublisher;
 
   public BookService(
       final BookDetailsProvider bookDetailsProvider,
@@ -31,7 +31,7 @@ public class BookService implements RegisterBook, ListBooks {
   @Override
   public Optional<Book> registerBook(final RegisterBookCommand command) {
     var book = this.bookDetailsProvider.find(command.isbn());
-    var savedBook = book.map(Book::createBook).map(b -> this.books.save(b));
+    var savedBook = book.map(Book::createBook).map(this.books::save);
     savedBook.ifPresent(
         presentBook ->
             this.bookEventPublisher.publishEvents(

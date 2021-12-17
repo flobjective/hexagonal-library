@@ -5,12 +5,10 @@ import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.*;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookNotFoundException;
-import io.micronaut.context.event.ApplicationEventPublisher;
-import lombok.AllArgsConstructor;
-
-import javax.transaction.Transactional;
 import java.time.Clock;
 import java.util.List;
+import javax.transaction.Transactional;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CirculationService
@@ -25,7 +23,6 @@ public class CirculationService
   private final Clock clock;
   private final Books allBooks;
   private final UserRepository userRepository;
-  private final ApplicationEventPublisher applicationEventPublisher;
 
   @Override
   @Transactional
@@ -36,7 +33,6 @@ public class CirculationService
             .orElseThrow(() -> new BookNotFoundException(issueBookCommand.getBookId()));
     var result = book.issueToUser(issueBookCommand.getUserId());
     this.allBooks.save(book);
-    //        this.applicationEventPublisher.publishEvent(result.event());
   }
 
   @Override
@@ -51,7 +47,7 @@ public class CirculationService
   }
 
   @Override
-  public List<BookReadModel> listIssuedBooks(final UserId userId) {
+  public List<Book> listIssuedBooks(final UserId userId) {
     return this.allBooks.issuedTo(userId);
   }
 
@@ -62,15 +58,15 @@ public class CirculationService
     this.allBooks.insert(newBook);
   }
 
-  public void expireReservations() {
-    var books = this.allBooks.withExpiredReservations(this.clock);
-    books.stream()
-        .filter(book -> book.currentReservation().hasExpired(this.clock))
-        .forEach(Book::expireReservation);
-  }
+  //  public void expireReservations() {
+  //    var books = this.allBooks.withExpiredReservations(this.clock);
+  //    books.stream()
+  //        .filter(book -> book.currentReservation().hasExpired(this.clock))
+  //        .forEach(Book::expireReservation);
+  //  }
 
   @Override
-  public List<AvailableBookReadModel> listAvailableBooks() {
+  public List<Book> listAvailableBooks() {
     return this.allBooks.available();
   }
 
@@ -85,9 +81,7 @@ public class CirculationService
   }
 
   @Override
-  public AvailableBookReadModel getAvailableBook(final BookId bookId) {
-    return this.allBooks
-            .readAvailableBook(bookId)
-            .orElseThrow(() -> new BookNotFoundException(bookId));
+  public Book getAvailableBook(final BookId bookId) {
+    return this.allBooks.withId(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
   }
 }

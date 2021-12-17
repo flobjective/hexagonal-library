@@ -18,7 +18,6 @@ public class CirculationDomainConfig {
       final Books books,
       final UserRepository userRepository,
       final ApplicationEventPublisher applicationEventPublisher) {
-    return new CirculationService(
-        Clock.systemUTC(), books, userRepository, applicationEventPublisher);
+    return new CirculationService(Clock.systemUTC(), books, userRepository);
   }
 }

@@ -1,7 +1,9 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
-import com.ffr.booklibrary.circulation.core.domain.model.*;
+import com.ffr.booklibrary.circulation.core.domain.model.Book;
+import com.ffr.booklibrary.circulation.core.domain.model.BookId;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +13,7 @@ import javax.inject.Singleton;
 @Singleton
 public class BooksJpaAdapter implements Books {
 
-  private BookJpaRepository bookJpaRepository;
+  private final BookJpaRepository bookJpaRepository;
 
   public BooksJpaAdapter(final BookJpaRepository bookJpaRepository) {
     this.bookJpaRepository = bookJpaRepository;
@@ -37,9 +39,9 @@ public class BooksJpaAdapter implements Books {
   }
 
   @Override
-  public List<BookReadModel> issuedTo(final UserId userId) {
+  public List<Book> issuedTo(final UserId userId) {
     return this.bookJpaRepository.findIssuedByUserId(userId.id()).stream()
-        .map(JpaBook::toReadModel)
+        .map(JpaBook::toBook)
         .collect(Collectors.toList());
   }
 
@@ -49,14 +51,9 @@ public class BooksJpaAdapter implements Books {
   }
 
   @Override
-  public List<AvailableBookReadModel> available() {
+  public List<Book> available() {
     return this.bookJpaRepository.findAvailable().stream()
-        .map(JpaBook::toAvailableReadModel)
+        .map(JpaBook::toBook)
         .collect(Collectors.toList());
-  }
-
-  @Override
-  public Optional<AvailableBookReadModel> readAvailableBook(BookId bookId) {
-    return this.bookJpaRepository.findByBookId(bookId.id()).map(JpaBook::toAvailableReadModel);
   }
 }

@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.inventory.core.adapters.db;
 
-import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.inventory.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,11 +8,11 @@ import java.util.stream.StreamSupport;
 import javax.inject.Singleton;
 
 @Singleton
-public class BookJpaRepositoryAdapter implements BookRepository {
+public class BooksJpaAdapter implements Books {
 
   private BookJpaRepository bookJpaRepository;
 
-  public BookJpaRepositoryAdapter(final BookJpaRepository bookJpaRepository) {
+  public BooksJpaAdapter(final BookJpaRepository bookJpaRepository) {
     this.bookJpaRepository = bookJpaRepository;
   }
 
@@ -22,7 +22,7 @@ public class BookJpaRepositoryAdapter implements BookRepository {
   }
 
   @Override
-  public List<Book> list() {
+  public List<Book> all() {
     return StreamSupport.stream(this.bookJpaRepository.findAll().spliterator(), false)
         .map(JpaBook::toBook)
         .collect(Collectors.toList());

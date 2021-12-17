@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.circulation.core.adapters.db;
 
-import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.circulation.core.domain.model.*;
 import java.time.Clock;
 import java.util.List;
@@ -9,16 +9,16 @@ import java.util.stream.Collectors;
 import javax.inject.Singleton;
 
 @Singleton
-public class BookJpaRepositoryAdapter implements BookRepository {
+public class BooksJpaAdapter implements Books {
 
   private BookJpaRepository bookJpaRepository;
 
-  public BookJpaRepositoryAdapter(final BookJpaRepository bookJpaRepository) {
+  public BooksJpaAdapter(final BookJpaRepository bookJpaRepository) {
     this.bookJpaRepository = bookJpaRepository;
   }
 
   @Override
-  public Optional<Book> find(final BookId book) {
+  public Optional<Book> withId(final BookId book) {
     return bookJpaRepository.findById(book.id()).map(JpaBook::toBook);
   }
 
@@ -37,19 +37,19 @@ public class BookJpaRepositoryAdapter implements BookRepository {
   }
 
   @Override
-  public List<BookReadModel> listIssuedBooks(final UserId userId) {
+  public List<BookReadModel> issuedTo(final UserId userId) {
     return this.bookJpaRepository.findIssuedByUserId(userId.id()).stream()
         .map(JpaBook::toReadModel)
         .collect(Collectors.toList());
   }
 
   @Override
-  public List<Book> findBooksWithExpiredReservations(final Clock clock) {
+  public List<Book> withExpiredReservations(final Clock clock) {
     return bookJpaRepository.findBooksWithExpiredReservations(clock.instant());
   }
 
   @Override
-  public List<AvailableBookReadModel> listAvailableBooks() {
+  public List<AvailableBookReadModel> available() {
     return this.bookJpaRepository.findAvailable().stream()
         .map(JpaBook::toAvailableReadModel)
         .collect(Collectors.toList());

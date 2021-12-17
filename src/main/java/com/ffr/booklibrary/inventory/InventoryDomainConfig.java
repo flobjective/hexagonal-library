@@ -7,7 +7,7 @@ import com.ffr.booklibrary.inventory.core.application.ports.incoming.ListBooks;
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBook;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
-import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.inventory.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.EventsRepository;
 import com.ffr.booklibrary.inventory.core.application.services.BookService;
 import io.micronaut.context.annotation.Factory;
@@ -29,8 +29,8 @@ public class InventoryDomainConfig {
   //  @Inject private KafkaEventSender kafkaEventSender;
 
   @Singleton
-  BookRepository bookRepository() {
-    return new BookJpaRepositoryAdapter(bookJpaRepository);
+  Books bookRepository() {
+    return new BooksJpaAdapter(bookJpaRepository);
   }
 
   @Singleton
@@ -54,10 +54,10 @@ public class InventoryDomainConfig {
   @Singleton
   @Inject
   BookService bookService(
-      final BookRepository bookRepository,
+      final Books books,
       final BookDetailsProvider bookDetailsProvider,
       final BookEventPublisher bookEventPublisher) {
-    return new BookService(bookDetailsProvider, bookRepository, bookEventPublisher);
+    return new BookService(bookDetailsProvider, books, bookEventPublisher);
   }
 
   @Singleton

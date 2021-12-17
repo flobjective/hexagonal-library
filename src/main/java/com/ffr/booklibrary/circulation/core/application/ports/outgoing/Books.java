@@ -5,18 +5,18 @@ import java.time.Clock;
 import java.util.List;
 import java.util.Optional;
 
-public interface BookRepository {
-  Optional<Book> find(final BookId bookId);
+public interface Books {
+  Optional<Book> withId(final BookId bookId);
 
   Book insert(Book book);
 
   Book save(Book book);
 
-  List<BookReadModel> listIssuedBooks(UserId userId);
+  List<BookReadModel> issuedTo(UserId userId);
 
-  List<Book> findBooksWithExpiredReservations(Clock clock);
+  List<Book> withExpiredReservations(Clock clock);
 
-  List<AvailableBookReadModel> listAvailableBooks();
+  List<AvailableBookReadModel> available();
 
   Optional<AvailableBookReadModel> readAvailableBook(BookId bookId);
 }

@@ -5,7 +5,7 @@ import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBoo
 import com.ffr.booklibrary.inventory.core.application.ports.incoming.RegisterBookCommand;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookDetailsProvider;
 import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookEventPublisher;
-import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.inventory.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
 import com.ffr.booklibrary.shared.events.BookRegistrationCompleted;
 import java.util.List;
@@ -15,15 +15,15 @@ import javax.transaction.Transactional;
 public class BookService implements RegisterBook, ListBooks {
 
   private BookDetailsProvider bookDetailsProvider;
-  private BookRepository bookRepository;
+  private Books books;
   private BookEventPublisher bookEventPublisher;
 
   public BookService(
       final BookDetailsProvider bookDetailsProvider,
-      final BookRepository bookRepository,
+      final Books books,
       final BookEventPublisher bookEventPublisher) {
     this.bookDetailsProvider = bookDetailsProvider;
-    this.bookRepository = bookRepository;
+    this.books = books;
     this.bookEventPublisher = bookEventPublisher;
   }
 
@@ -31,7 +31,7 @@ public class BookService implements RegisterBook, ListBooks {
   @Override
   public Optional<Book> registerBook(final RegisterBookCommand command) {
     var book = this.bookDetailsProvider.find(command.isbn());
-    var savedBook = book.map(Book::createBook).map(b -> this.bookRepository.save(b));
+    var savedBook = book.map(Book::createBook).map(b -> this.books.save(b));
     savedBook.ifPresent(
         presentBook ->
             this.bookEventPublisher.publishEvents(
@@ -43,6 +43,6 @@ public class BookService implements RegisterBook, ListBooks {
 
   @Override
   public List<Book> listBooks() {
-    return this.bookRepository.list();
+    return this.books.all();
   }
 }

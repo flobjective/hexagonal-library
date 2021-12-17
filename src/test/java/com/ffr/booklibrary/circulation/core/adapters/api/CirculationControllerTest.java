@@ -3,7 +3,7 @@ package com.ffr.booklibrary.circulation.core.adapters.api;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.Book;
 import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
@@ -16,9 +16,7 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.time.Clock;
-import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 import javax.inject.Inject;
 
 import org.assertj.core.api.Condition;
@@ -33,7 +31,7 @@ class CirculationControllerTest {
   @Client(BASE_PATH)
   RxHttpClient client;
 
-  @Inject private BookRepository bookRepository;
+  @Inject private Books books;
 
   @Inject private UserRepository userRepository;
 
@@ -48,7 +46,7 @@ class CirculationControllerTest {
   @Test
   void listAvailableBooks_someBooks() {
     var book =
-        bookRepository.insert(
+        books.insert(
             Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     HttpResponse<AvailableBooksResponse> response =
@@ -69,7 +67,7 @@ class CirculationControllerTest {
   @Test
   void issueBook_success() {
     var book =
-        bookRepository.insert(
+        books.insert(
             Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     var user = userRepository.insert(User.create("John Doe"));
@@ -108,7 +106,7 @@ class CirculationControllerTest {
   @Test
   void returnBook_success() {
     var book =
-        bookRepository.insert(
+        books.insert(
             Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     var user = userRepository.insert(User.create("John Doe"));
@@ -134,7 +132,7 @@ class CirculationControllerTest {
   @Test
   void reserveBook_success() {
     var book =
-        bookRepository.insert(
+        books.insert(
             Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     var john = userRepository.insert(User.create("John Doe"));
@@ -171,7 +169,7 @@ class CirculationControllerTest {
   @Test
   void getAvailableBook_success() {
     var book =
-        bookRepository.insert(
+        books.insert(
             Book.create(Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString())));
 
     HttpResponse<AvailableBook> response =

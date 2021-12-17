@@ -1,7 +1,7 @@
 package com.ffr.booklibrary.circulation.core.application.services;
 
 import com.ffr.booklibrary.circulation.core.application.ports.incoming.*;
-import com.ffr.booklibrary.circulation.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.*;
 import com.ffr.booklibrary.circulation.core.domain.model.exceptions.BookNotFoundException;
@@ -23,7 +23,7 @@ public class CirculationService
         GetAvailableBook {
 
   private final Clock clock;
-  private final BookRepository bookRepository;
+  private final Books allBooks;
   private final UserRepository userRepository;
   private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -31,11 +31,11 @@ public class CirculationService
   @Transactional
   public void issueBook(final IssueBookCommand issueBookCommand) {
     Book book =
-        this.bookRepository
-            .find(issueBookCommand.getBookId())
+        this.allBooks
+            .withId(issueBookCommand.getBookId())
             .orElseThrow(() -> new BookNotFoundException(issueBookCommand.getBookId()));
     var result = book.issueToUser(issueBookCommand.getUserId());
-    this.bookRepository.save(book);
+    this.allBooks.save(book);
     //        this.applicationEventPublisher.publishEvent(result.event());
   }
 
@@ -43,27 +43,27 @@ public class CirculationService
   @Transactional
   public void returnBook(final ReturnBookCommand returnBookCommand) {
     Book book =
-        this.bookRepository
-            .find(returnBookCommand.bookId())
+        this.allBooks
+            .withId(returnBookCommand.bookId())
             .orElseThrow(() -> new BookNotFoundException(returnBookCommand.bookId()));
     book.returnBook(returnBookCommand.userId());
-    this.bookRepository.save(book);
+    this.allBooks.save(book);
   }
 
   @Override
   public List<BookReadModel> listIssuedBooks(final UserId userId) {
-    return this.bookRepository.listIssuedBooks(userId);
+    return this.allBooks.issuedTo(userId);
   }
 
   @Override
   @Transactional
   public void addBookToCirculation(final InventoryNumber inventoryNumber) {
     Book newBook = Book.create(this.clock, inventoryNumber);
-    this.bookRepository.insert(newBook);
+    this.allBooks.insert(newBook);
   }
 
   public void expireReservations() {
-    var books = this.bookRepository.findBooksWithExpiredReservations(this.clock);
+    var books = this.allBooks.withExpiredReservations(this.clock);
     books.stream()
         .filter(book -> book.currentReservation().hasExpired(this.clock))
         .forEach(Book::expireReservation);
@@ -71,22 +71,22 @@ public class CirculationService
 
   @Override
   public List<AvailableBookReadModel> listAvailableBooks() {
-    return this.bookRepository.listAvailableBooks();
+    return this.allBooks.available();
   }
 
   @Override
   public void reserveBook(final ReserveBookCommand reserveBookCommand) {
     Book book =
-        this.bookRepository
-            .find(reserveBookCommand.bookId())
+        this.allBooks
+            .withId(reserveBookCommand.bookId())
             .orElseThrow(() -> new BookNotFoundException(reserveBookCommand.bookId()));
     book.reserveToUser(reserveBookCommand.userId());
-    this.bookRepository.save(book);
+    this.allBooks.save(book);
   }
 
   @Override
   public AvailableBookReadModel getAvailableBook(final BookId bookId) {
-    return this.bookRepository
+    return this.allBooks
             .readAvailableBook(bookId)
             .orElseThrow(() -> new BookNotFoundException(bookId));
   }

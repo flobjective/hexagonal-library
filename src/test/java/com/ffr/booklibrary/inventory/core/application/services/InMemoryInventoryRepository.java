@@ -1,6 +1,6 @@
 package com.ffr.booklibrary.inventory.core.application.services;
 
-import com.ffr.booklibrary.inventory.core.application.ports.outgoing.BookRepository;
+import com.ffr.booklibrary.inventory.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.inventory.core.domain.model.Book;
 import com.ffr.booklibrary.inventory.core.domain.model.BookIdentification;
 import com.ffr.booklibrary.inventory.core.domain.model.BookTitle;
@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class InMemoryInventoryRepository implements BookRepository {
+public class InMemoryInventoryRepository implements Books {
 
   private final ConcurrentHashMap<UUID, Book> books = new ConcurrentHashMap<>();
 
@@ -37,7 +37,7 @@ public class InMemoryInventoryRepository implements BookRepository {
   }
 
   @Override
-  public List<Book> list() {
+  public List<Book> all() {
     return books.values().stream().collect(Collectors.toList());
   }
 

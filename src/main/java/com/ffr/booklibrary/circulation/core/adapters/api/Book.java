@@ -2,12 +2,13 @@ package com.ffr.booklibrary.circulation.core.adapters.api;
 
 import io.micronaut.http.hateoas.AbstractResource;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class Book extends AbstractResource<Book> {
 
   private String bookId;

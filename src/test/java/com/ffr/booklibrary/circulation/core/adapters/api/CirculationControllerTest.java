@@ -34,14 +34,6 @@ class CirculationControllerTest {
   @Inject private UserRepository userRepository;
 
   @Test
-  void listAvailableBooks_noBooks() {
-    HttpRequest<String> request = HttpRequest.GET("/available");
-    var httpResponse = client.toBlocking().exchange(request);
-    assertEquals(HttpStatus.OK, httpResponse.status());
-    assertNull(httpResponse.body());
-  }
-
-  @Test
   void listAvailableBooks_someBooks() {
     var book =
         books.insert(
@@ -55,12 +47,7 @@ class CirculationControllerTest {
         .isNotNull()
         .extracting(HttpResponse::body)
         .extracting(AvailableBooksResponse::getBooks)
-        .has(
-            new Condition<>(
-                (books) ->
-                    books.stream()
-                        .anyMatch((b) -> b.getBookId().equalsIgnoreCase(book.id().toString())),
-                ""));
+            .asList().contains(new Book(book.id().toString(), book.inventoryNumber().toString()));
   }
 
   @Test

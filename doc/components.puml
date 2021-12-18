@@ -1,5 +1,4 @@
 @startuml
 component [Inventory]
 component [Circulation]
-component [Collection]
 @enduml

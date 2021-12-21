@@ -94,4 +94,8 @@ public class Book extends BaseEntity {
   private boolean isReserved() {
     return this.currentReservation != null;
   }
+
+  public boolean borrowable() {
+    return !this.isIssued();
+  }
 }

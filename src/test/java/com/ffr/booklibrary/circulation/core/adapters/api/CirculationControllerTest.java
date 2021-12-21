@@ -1,12 +1,13 @@
 package com.ffr.booklibrary.circulation.core.adapters.api;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.Books;
 import com.ffr.booklibrary.circulation.core.application.ports.outgoing.UserRepository;
 import com.ffr.booklibrary.circulation.core.domain.model.InventoryNumber;
 import com.ffr.booklibrary.circulation.core.domain.model.User;
+import com.ffr.booklibrary.circulation.core.domain.model.UserId;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -17,7 +18,6 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.time.Clock;
 import java.util.UUID;
 import javax.inject.Inject;
-import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest(transactional = false)
@@ -47,7 +47,13 @@ class CirculationControllerTest {
         .isNotNull()
         .extracting(HttpResponse::body)
         .extracting(AvailableBooksResponse::getBooks)
-            .asList().contains(new Book(book.id().toString(), book.inventoryNumber().toString()));
+        .asList()
+        .contains(
+            Book.builder()
+                .bookId(book.id().toString())
+                .inventoryNumber(book.inventoryNumber().toString())
+                .borrowable(true)
+                .build());
   }
 
   @Test
@@ -164,6 +170,25 @@ class CirculationControllerTest {
     assertThat(response)
         .isNotNull()
         .extracting(HttpResponse::body)
-        .hasFieldOrPropertyWithValue("bookId", book.id().toString());
+        .hasFieldOrPropertyWithValue("bookId", book.id().toString())
+        .hasFieldOrPropertyWithValue("borrowable", true);
+  }
+
+  @Test
+  void getBook_success_notBorrowable() {
+    var book =
+        com.ffr.booklibrary.circulation.core.domain.model.Book.create(
+            Clock.systemUTC(), new InventoryNumber(UUID.randomUUID().toString()));
+    book.issueToUser(new UserId(UUID.randomUUID()));
+    var created = books.insert(book);
+
+    HttpResponse<Book> response =
+        client.toBlocking().exchange(HttpRequest.GET("/" + created.id()), Book.class);
+
+    assertThat(response)
+        .isNotNull()
+        .extracting(HttpResponse::body)
+        .hasFieldOrPropertyWithValue("bookId", created.id().toString())
+        .hasFieldOrPropertyWithValue("borrowable", false);
   }
 }

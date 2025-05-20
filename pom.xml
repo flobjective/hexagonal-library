@@ -9,22 +9,22 @@
   <parent>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>2.4.2</version>
+    <version>4.0.0</version>
   </parent>
 
   <properties>
     <packaging>jar</packaging>
     <jdk.version>11</jdk.version>
     <release.version>11</release.version>
-    <micronaut.version>2.4.2</micronaut.version>
-    <micronaut.data.version>2.3.1</micronaut.data.version>
-    <micronaut.hibernate-validator.version>2.0.0</micronaut.hibernate-validator.version>
-    <hibernate-types.version>2.13.0</hibernate-types.version>
+    <micronaut.version>4.0.0</micronaut.version>
+    <micronaut.data.version>4.0.0</micronaut.data.version>
+    <micronaut.hibernate-validator.version>4.0.0</micronaut.hibernate-validator.version>
+    <hibernate-types.version>3.2.0</hibernate-types.version>
     <exec.mainClass>com.ffr.booklibrary.BookLibraryApplication</exec.mainClass>
     <micronaut.runtime>netty</micronaut.runtime>
-    <lombok.version>1.18.20</lombok.version>
-    <archunit.version>0.20.0</archunit.version>
-    <spotless.version>2.17.2</spotless.version>
+    <lombok.version>1.18.30</lombok.version>
+    <archunit.version>1.0.1</archunit.version>
+    <spotless.version>2.45.0</spotless.version>
   </properties>
 
   <repositories>
